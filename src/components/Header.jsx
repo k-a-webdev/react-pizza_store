@@ -7,13 +7,13 @@ export default function Header() {
         <div className="header__logo">
           <img width="38" src={logoSvg} alt="Pizza logo" />
           <div>
-            <h1>React Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
+            <h1>Pizza store</h1>
+            <p>The most delicious pizza in the Universal</p>
           </div>
         </div>
         <div className="header__cart">
           <a href="/cart.html" className="button button--cart">
-            <span>520 ₽</span>
+            <span>520 ₴</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
