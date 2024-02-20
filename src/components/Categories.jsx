@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-export default function Categories() {
-  const [activeCategory, setActiveCategory] = useState(0);
-
+export default function Categories({ activeCategory, setActiveCategory }) {
   const categorieList = [
     "Всі",
     "М'ясні",
@@ -36,4 +32,4 @@ export default function Categories() {
 }
 
 // TODO
-// - add all categories in list and list.map((el, i) => return(<li onClick={...} className={...}>{el}</li>))
+// -

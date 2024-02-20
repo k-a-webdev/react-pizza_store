@@ -1,14 +1,19 @@
 import { useState } from "react";
 
-export default function Sort() {
+export const sortList = [
+  { name: "популярністю (DESC)", type: "rating" },
+  { name: "популярністю (ASC)", type: "-rating" },
+  { name: "ціною (за спаданням)", type: "price" },
+  { name: "ціною (за зростанням)", type: "-price" },
+  { name: "алфавітом (DESC)", type: "title" },
+  { name: "алфавітом (ASC)", type: "-title" },
+];
+
+export function Sort({ activeSort, setActiveSort }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const sortList = ["популярністю", "ціною", "алфавітом"];
-
-  const [activeSort, setActiveSort] = useState(sortList[0]);
-
-  const onChangeSort = (sort) => {
-    setActiveSort(sort);
+  const onChangeSort = (i) => {
+    setActiveSort(i);
     setIsOpen(false);
   };
 
@@ -28,19 +33,21 @@ export default function Sort() {
           />
         </svg>
         <b>Сортувати за:</b>
-        <span onClick={() => setIsOpen((prev) => !prev)}>{activeSort}</span>
+        <span onClick={() => setIsOpen((prev) => !prev)}>
+          {sortList[activeSort].name}
+        </span>
       </div>
       {isOpen && (
         <div className="sort__popup">
           <ul>
-            {sortList.map((el) => {
+            {sortList.map((el, i) => {
               return (
                 <li
-                  className={activeSort === el ? "active" : ""}
-                  onClick={() => onChangeSort(el)}
-                  key={el}
+                  className={activeSort === i ? "active" : ""}
+                  onClick={() => onChangeSort(i)}
+                  key={el.type}
                 >
-                  {el}
+                  {el.name}
                 </li>
               );
             })}
