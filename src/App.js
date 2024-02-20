@@ -11,13 +11,11 @@ export default function App() {
     <div className="wrapper">
       <Header />
       <div className="content">
-        <div className="container">
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
     </div>
   );
@@ -26,3 +24,4 @@ export default function App() {
 // TODO:
 // - change language to English
 // - change fonts to em/rem
+// - add more responsive styles

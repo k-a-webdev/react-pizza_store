@@ -24,15 +24,16 @@ export default function Home() {
 
   useEffect(() => {
     fetchPizzas();
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">Всі піци</h2>
       <div className="content__items">
         {isLoading
           ? fakeCards.map((el) => {
@@ -42,6 +43,6 @@ export default function Home() {
               return <PizzaBlock {...el} key={el.id} />;
             })}
       </div>
-    </>
+    </div>
   );
 }

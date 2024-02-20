@@ -4,12 +4,12 @@ export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(0);
 
   const categorieList = [
-    "Все",
-    "Мясные",
-    "Вегетарианские",
+    "Всі",
+    "М'ясні",
+    "Вегетаріанські",
     "Гриль",
-    "Острые",
-    "Закрытые",
+    "Гострі",
+    "Закриті",
   ];
 
   const onChangeCategory = (index) => {

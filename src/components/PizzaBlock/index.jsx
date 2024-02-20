@@ -17,7 +17,7 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
                 className={activeType === type ? "active" : ""}
                 key={type}
               >
-                {type ? "тонкая" : "традиционная"}
+                {type ? "тонка" : "традиційна"}
               </li>
             );
           })}
@@ -37,7 +37,7 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₴</div>
+        <div className="pizza-block__price">від {price} ₴</div>
         <button className="button button--outline button--add">
           <svg
             width="12"
@@ -51,7 +51,7 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
+          <span>Додати</span>
           <i>0</i>
         </button>
       </div>

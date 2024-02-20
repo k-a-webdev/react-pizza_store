@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function Sort() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const sortList = ["популярности", "цене", "алфавиту"];
+  const sortList = ["популярністю", "ціною", "алфавітом"];
 
   const [activeSort, setActiveSort] = useState(sortList[0]);
 
@@ -27,7 +27,7 @@ export default function Sort() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Сортувати за:</b>
         <span onClick={() => setIsOpen((prev) => !prev)}>{activeSort}</span>
       </div>
       {isOpen && (
