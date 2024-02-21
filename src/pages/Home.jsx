@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Categories from "../components/Categories";
@@ -6,14 +6,16 @@ import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
+import { AppContext } from "../App";
 
-export default function Home({ searchValue }) {
+export default function Home() {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters
   const [activeSort, setActiveSort] = useState(0);
   const [activeCategory, setActiveCategory] = useState(0);
+  const { searchValue } = useContext(AppContext);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);

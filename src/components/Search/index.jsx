@@ -1,6 +1,12 @@
+import { useContext } from "react";
+
 import styles from "./Search.module.scss";
 
-export default function Search({ searchValue, setSearchValue }) {
+import { AppContext } from "../../App";
+
+export default function Search() {
+  const { searchValue, setSearchValue } = useContext(AppContext);
+
   const onClearSearch = () => {
     setSearchValue("");
   };
