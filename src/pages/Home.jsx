@@ -6,7 +6,7 @@ import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 
-export default function Home() {
+export default function Home({ searchValue }) {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,12 +30,23 @@ export default function Home() {
     });
   };
 
-  const fakeCards = new Array(8).fill({}).map((_, index) => ({ id: index }));
+  const pizzasItems = pizzas
+    .filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    )
+    .map((item) => <PizzaBlock key={item.id} {...item} />);
+
+  const fakeCards = new Array(8)
+    .fill({})
+    .map((_, index) => ({ id: index }))
+    .map((el) => {
+      return <Skeleton key={el.id} />;
+    });
 
   useEffect(() => {
     fetchPizzas();
     window.scrollTo(0, 0);
-  }, [activeCategory, activeSort]);
+  }, [activeCategory, activeSort, searchValue]);
 
   return (
     <div className="container">
@@ -45,13 +56,7 @@ export default function Home() {
       </div>
       <h2 className="content__title">Всі піци</h2>
       <div className="content__items">
-        {isLoading
-          ? fakeCards.map((el) => {
-              return <Skeleton key={el.id} />;
-            })
-          : pizzas.map((el) => {
-              return <PizzaBlock {...el} key={el.id} />;
-            })}
+        {isLoading ? fakeCards : pizzasItems}
       </div>
     </div>
   );
