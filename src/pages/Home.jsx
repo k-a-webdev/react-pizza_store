@@ -5,6 +5,7 @@ import Categories from "../components/Categories";
 import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
+import Pagination from "../components/Pagination";
 
 export default function Home({ searchValue }) {
   const [pizzas, setPizzas] = useState([]);
@@ -14,15 +15,19 @@ export default function Home({ searchValue }) {
   const [activeSort, setActiveSort] = useState(0);
   const [activeCategory, setActiveCategory] = useState(0);
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log(currentPage);
+
   const fetchPizzas = () => {
     setIsLoading(true);
 
     const sortInfo = sortList[activeSort].type;
     const filterBy = sortInfo.replace("-", "");
     const filterOrder = sortInfo.includes("-") ? "asc" : "desc";
-    const filterCategory = activeCategory ? `category=${activeCategory}` : "";
+    const filterCategory = activeCategory ? `&category=${activeCategory}` : "";
 
-    const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
+    const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?page=${currentPage}&limit=4${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
 
     axios.get(mainURL).then((res) => {
       setPizzas(res.data);
@@ -46,7 +51,7 @@ export default function Home({ searchValue }) {
   useEffect(() => {
     fetchPizzas();
     window.scrollTo(0, 0);
-  }, [activeCategory, activeSort, searchValue]);
+  }, [activeCategory, activeSort, searchValue, currentPage]);
 
   return (
     <div className="container">
@@ -58,6 +63,8 @@ export default function Home({ searchValue }) {
       <div className="content__items">
         {isLoading ? fakeCards : pizzasItems}
       </div>
+
+      <Pagination {...{ setCurrentPage }} />
     </div>
   );
 }
