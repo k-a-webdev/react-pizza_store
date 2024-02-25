@@ -1,4 +1,8 @@
-export default function Categories({ activeCategory, setActiveCategory }) {
+// Redux Toolkit imports
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveCategory } from "../redux/slices/filterSlice";
+
+export default function Categories() {
   const categorieList = [
     "Всі",
     "М'ясні",
@@ -8,8 +12,14 @@ export default function Categories({ activeCategory, setActiveCategory }) {
     "Закриті",
   ];
 
+  // Redux variables
+  const dispatch = useDispatch();
+  const activeCategory = useSelector(
+    (state) => state.filterReducer.activeCategory
+  );
+
   const onChangeCategory = (index) => {
-    setActiveCategory(index);
+    dispatch(setActiveCategory(index));
   };
 
   return (

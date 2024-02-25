@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
+// Redux Toolkit imports
+import { useSelector } from "react-redux";
+
 import Categories from "../components/Categories";
 import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -13,13 +16,13 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters
-  const [activeSort, setActiveSort] = useState(0);
-  const [activeCategory, setActiveCategory] = useState(0);
+  const { activeCategory, activeSort } = useSelector(
+    (state) => state.filterReducer
+  );
   const { searchValue } = useContext(AppContext);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(currentPage);
 
   const fetchPizzas = () => {
     setIsLoading(true);
@@ -58,8 +61,8 @@ export default function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories {...{ activeCategory, setActiveCategory }} />
-        <Sort {...{ activeSort, setActiveSort }} />
+        <Categories />
+        <Sort />
       </div>
       <h2 className="content__title">Всі піци</h2>
       <div className="content__items">

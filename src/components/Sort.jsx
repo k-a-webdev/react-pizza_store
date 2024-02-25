@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+// Redux Toolkit imports
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveSort } from "../redux/slices/filterSlice";
+
 export const sortList = [
   { name: "популярністю (DESC)", type: "rating" },
   { name: "популярністю (ASC)", type: "-rating" },
@@ -9,11 +13,15 @@ export const sortList = [
   { name: "алфавітом (ASC)", type: "-title" },
 ];
 
-export function Sort({ activeSort, setActiveSort }) {
+export function Sort() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Redux variables
+  const dispatch = useDispatch();
+  const activeSort = useSelector((state) => state.filterReducer.activeSort);
+
   const onChangeSort = (i) => {
-    setActiveSort(i);
+    dispatch(setActiveSort(i));
     setIsOpen(false);
   };
 
