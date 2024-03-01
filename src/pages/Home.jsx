@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import qs from "qs";
 
 // Redux Toolkit imports
 import { useDispatch, useSelector } from "react-redux";
@@ -10,14 +12,19 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { AppContext } from "../App";
-import { setActivePage } from "../redux/slices/filterSlice";
+import { setActivePage, setFilters } from "../redux/slices/filterSlice";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isSearch = useRef(false);
+  const isMounted = useRef(false); // To check if there was a first render
+
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters
-  const dispatch = useDispatch();
   const { activeCategory, activeSort, activePage } = useSelector(
     (state) => state.filterReducer
   );
@@ -42,6 +49,54 @@ export default function Home() {
     });
   };
 
+  // At the first rendering, we check the url parameters and, if available, record them in the editor
+  useEffect(() => {
+    const urlParams = window.location.search;
+    if (urlParams) {
+      const params = qs.parse(urlParams.substring(1));
+
+      const sort = sortList.findIndex((el, i) => {
+        if (
+          el.type === `${params.order === "asc" ? "-" : ""}${params.sortBy}`
+        ) {
+          return true;
+        }
+      });
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      );
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const sortInfo = sortList[activeSort].type;
+      const queryString = qs.stringify({
+        sortBy: sortInfo.replace("-", ""),
+        order: sortInfo.includes("-") ? "asc" : "desc",
+        category: activeCategory,
+        page: activePage,
+      });
+
+      navigate(`?${queryString}`);
+    } else {
+      isMounted.current = true;
+    }
+
+    window.scrollTo(0, 0);
+
+    // To check if params from url or from client. If from url fetchPizzas() executed in useEffect when the page is loaded, else fetchPizzas() executed there
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+    isSearch.current = false;
+  }, [activeCategory, activeSort, searchValue, activePage]);
+
   const pizzasItems = pizzas
     .filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -55,11 +110,6 @@ export default function Home() {
       return <Skeleton key={el.id} />;
     });
 
-  useEffect(() => {
-    fetchPizzas();
-    window.scrollTo(0, 0);
-  }, [activeCategory, activeSort, searchValue, activePage]);
-
   return (
     <div className="container">
       <div className="content__top">
@@ -71,7 +121,7 @@ export default function Home() {
         {isLoading ? fakeCards : pizzasItems}
       </div>
 
-      <Pagination {...{ onChangePage }} />
+      <Pagination {...{ onChangePage, activePage }} />
     </div>
   );
 }
