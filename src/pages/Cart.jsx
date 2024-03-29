@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { clearCart } from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
+import CartEmpty from "../components/CartEmpty";
 
 export default function Cart() {
   const { products, totalPrice } = useSelector((state) => state.cartReducer);
   const dispatcher = useDispatch();
 
   const totalCount = products.reduce((sum, el) => (sum += el.count), 0);
+
+  if (!products.length) {
+    return <CartEmpty />;
+  }
 
   return (
     <div className="container container--cart">
