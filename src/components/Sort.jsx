@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Redux Toolkit imports
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ export const sortList = [
 
 export function Sort() {
   const [isOpen, setIsOpen] = useState(false);
+  const sortRef = useRef(null);
 
   // Redux variables
   const dispatch = useDispatch();
@@ -25,8 +26,19 @@ export function Sort() {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (!e.composedPath().includes(sortRef.current) && isOpen)
+        setIsOpen(false);
+    };
+
+    document.body.addEventListener("click", onClickOutside);
+
+    return () => document.body.removeEventListener("click", onClickOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

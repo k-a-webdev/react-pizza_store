@@ -1,8 +1,43 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../redux/slices/cartSlice";
 
-export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
+export default function PizzaBlock({
+  title,
+  price,
+  imageUrl,
+  types,
+  sizes,
+  id,
+}) {
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
+
+  const typeNames = ["тонка", "традиційна"];
+
+  // Redux
+  const dispatch = useDispatch();
+  const cartPizza = useSelector((state) =>
+    state.cartReducer.products.find(
+      (el) =>
+        el.id === id &&
+        el.size === activeSize &&
+        el.type === typeNames[activeType]
+    )
+  );
+
+  const onClickAdd = () => {
+    const pizza = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typeNames[activeType],
+      size: activeSize,
+    };
+
+    dispatch(addProduct(pizza));
+  };
 
   return (
     <div className="pizza-block">
@@ -17,7 +52,7 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
                 className={activeType === type ? "active" : ""}
                 key={type}
               >
-                {type ? "тонка" : "традиційна"}
+                {typeNames[type]}
               </li>
             );
           })}
@@ -38,7 +73,10 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">від {price} ₴</div>
-        <button className="button button--outline button--add">
+        <button
+          className="button button--outline button--add"
+          onClick={onClickAdd}
+        >
           <svg
             width="12"
             height="12"
@@ -52,7 +90,7 @@ export default function PizzaBlock({ title, price, imageUrl, types, sizes }) {
             />
           </svg>
           <span>Додати</span>
-          <i>0</i>
+          {cartPizza && <i>{cartPizza.count}</i>}
         </button>
       </div>
     </div>
