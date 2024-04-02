@@ -5,6 +5,8 @@ import qs from "qs";
 
 // Redux Toolkit imports
 import { useDispatch, useSelector } from "react-redux";
+import { setActivePage, setFilters } from "../redux/slices/filterSlice";
+import { setItems } from "../redux/slices/pizzasSlice";
 
 import Categories from "../components/Categories";
 import { Sort, sortList } from "../components/Sort";
@@ -12,7 +14,6 @@ import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { AppContext } from "../App";
-import { setActivePage, setFilters } from "../redux/slices/filterSlice";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,7 +22,6 @@ export default function Home() {
   const isSearch = useRef(false);
   const isMounted = useRef(false); // To check if there was a first render
 
-  const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters
@@ -33,7 +33,10 @@ export default function Home() {
     dispatch(setActivePage(number));
   };
 
-  const fetchPizzas = () => {
+  // Pizzas
+  const pizzas = useSelector((state) => state.pizzasReducer.items);
+
+  const fetchPizzas = async () => {
     setIsLoading(true);
 
     const sortInfo = sortList[activeSort].type;
@@ -43,10 +46,15 @@ export default function Home() {
 
     const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?page=${activePage}&limit=4${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
 
-    axios.get(mainURL).then((res) => {
-      setPizzas(res.data);
+    try {
+      const { data } = await axios.get(mainURL);
+      dispatch(setItems(data));
+    } catch (error) {
+      console.log("Request data error\n", error);
+      alert("Request data error!");
+    } finally {
       setIsLoading(false);
-    });
+    }
   };
 
   // At the first rendering, we check the url parameters and, if available, record them in the editor
@@ -60,7 +68,7 @@ export default function Home() {
           el.type === `${params.order === "asc" ? "-" : ""}${params.sortBy}`
         ) {
           return true;
-        }
+        } else return false;
       });
 
       dispatch(
