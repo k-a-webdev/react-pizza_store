@@ -1,19 +1,20 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import qs from "qs";
 
 // Redux Toolkit imports
 import { useDispatch, useSelector } from "react-redux";
 import { setActivePage, setFilters } from "../redux/slices/filterSlice";
-import { setItems } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
+// My omponents
 import Categories from "../components/Categories";
 import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { AppContext } from "../App";
+import GetPizzasError from "../components/GetPizzasError";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ export default function Home() {
 
   const isSearch = useRef(false);
   const isMounted = useRef(false); // To check if there was a first render
-
-  const [isLoading, setIsLoading] = useState(true);
 
   // Filters
   const { activeCategory, activeSort, activePage } = useSelector(
@@ -34,11 +33,14 @@ export default function Home() {
   };
 
   // Pizzas
-  const pizzas = useSelector((state) => state.pizzasReducer.items);
+  const { pizzas, isLoading } = useSelector((state) => {
+    return {
+      pizzas: state.pizzasReducer.items,
+      isLoading: state.pizzasReducer.isLoading,
+    };
+  });
 
-  const fetchPizzas = async () => {
-    setIsLoading(true);
-
+  const getPizzas = () => {
     const sortInfo = sortList[activeSort].type;
     const filterBy = sortInfo.replace("-", "");
     const filterOrder = sortInfo.includes("-") ? "asc" : "desc";
@@ -46,15 +48,7 @@ export default function Home() {
 
     const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?page=${activePage}&limit=4${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
 
-    try {
-      const { data } = await axios.get(mainURL);
-      dispatch(setItems(data));
-    } catch (error) {
-      console.log("Request data error\n", error);
-      alert("Request data error!");
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(fetchPizzas(mainURL));
   };
 
   // At the first rendering, we check the url parameters and, if available, record them in the editor
@@ -100,7 +94,7 @@ export default function Home() {
 
     // To check if params from url or from client. If from url fetchPizzas() executed in useEffect when the page is loaded, else fetchPizzas() executed there
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [activeCategory, activeSort, searchValue, activePage]);
@@ -124,12 +118,21 @@ export default function Home() {
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Всі піци</h2>
-      <div className="content__items">
-        {isLoading ? fakeCards : pizzasItems}
-      </div>
-
-      <Pagination {...{ onChangePage, activePage }} />
+      {isLoading !== "error" ? (
+        <>
+          <h2 className="content__title">Всі піци</h2>
+          <div className="content__items">
+            {isLoading === "loading"
+              ? fakeCards
+              : isLoading === "success"
+              ? pizzasItems
+              : null}
+          </div>
+          <Pagination {...{ onChangePage, activePage }} />
+        </>
+      ) : (
+        <GetPizzasError />
+      )}
     </div>
   );
 }

@@ -10,19 +10,19 @@ export const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setActiveCategory(state, action) {
-      state.activeCategory = action.payload;
+    setActiveCategory(state, { payload }) {
+      state.activeCategory = payload;
     },
-    setActiveSort(state, action) {
-      state.activeSort = action.payload;
+    setActiveSort(state, { payload }) {
+      state.activeSort = payload;
     },
-    setActivePage(state, action) {
-      state.activePage = action.payload;
+    setActivePage(state, { payload }) {
+      state.activePage = payload;
     },
-    setFilters(state, action) {
-      state.activeSort = Number(action.payload.sort);
-      state.activePage = Number(action.payload.page);
-      state.activeCategory = Number(action.payload.category);
+    setFilters(state, { payload }) {
+      state.activeSort = Number(payload.sort);
+      state.activePage = Number(payload.page);
+      state.activeCategory = Number(payload.category);
     },
   },
 });

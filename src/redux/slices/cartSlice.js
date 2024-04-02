@@ -9,8 +9,8 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addProduct(state, action) {
-      const newProduct = action.payload;
+    addProduct(state, { payload }) {
+      const newProduct = payload;
 
       const findProduct = state.products.find(
         (el) =>
@@ -29,8 +29,8 @@ const cartSlice = createSlice({
 
       state.totalPrice += newProduct.price;
     },
-    removeProduct(state, action) {
-      const oldProduct = action.payload;
+    removeProduct(state, { payload }) {
+      const oldProduct = payload;
 
       const findIndex = state.products.findIndex(
         (el) =>
@@ -49,10 +49,10 @@ const cartSlice = createSlice({
         }
       }
 
-      state.totalPrice -= action.payload.price;
+      state.totalPrice -= payload.price;
     },
-    clearProducts(state, action) {
-      const oldProduct = action.payload;
+    clearProducts(state, { payload }) {
+      const oldProduct = payload;
 
       const findIndex = state.products.findIndex(
         (el) =>

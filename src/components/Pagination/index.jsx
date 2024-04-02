@@ -1,7 +1,6 @@
 import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
-import { useSelector } from "react-redux";
 
 export default function index({ onChangePage, activePage }) {
   return (
@@ -18,3 +17,6 @@ export default function index({ onChangePage, activePage }) {
     />
   );
 }
+
+// TODO:
+// Moved here some Redux logic from the Home.jsx
