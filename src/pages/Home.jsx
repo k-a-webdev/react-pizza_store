@@ -1,10 +1,14 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
 // Redux Toolkit imports
 import { useDispatch, useSelector } from "react-redux";
-import { setActivePage, setFilters } from "../redux/slices/filterSlice";
+import {
+  selectFilter,
+  setActivePage,
+  setFilters,
+} from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 // My omponents
@@ -13,7 +17,6 @@ import { Sort, sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import { AppContext } from "../App";
 import GetPizzasError from "../components/GetPizzasError";
 
 export default function Home() {
@@ -27,18 +30,14 @@ export default function Home() {
   const { activeCategory, activeSort, activePage } = useSelector(
     (state) => state.filterReducer
   );
-  const { searchValue } = useContext(AppContext);
+  const searchValue = useSelector(selectFilter).searchValue;
   const onChangePage = (number) => {
     dispatch(setActivePage(number));
   };
 
   // Pizzas
-  const { pizzas, isLoading } = useSelector((state) => {
-    return {
-      pizzas: state.pizzasReducer.items,
-      isLoading: state.pizzasReducer.isLoading,
-    };
-  });
+  const pizzas = useSelector((state) => state.pizzasReducer.items);
+  const isLoading = useSelector((state) => state.pizzasReducer.isLoading);
 
   const getPizzas = () => {
     const sortInfo = sortList[activeSort].type;

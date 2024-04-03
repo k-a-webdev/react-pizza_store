@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import Search from "./Search";
 
 import logoSvg from "../assets/img/pizza-logo.svg";
+import { selectCart } from "../redux/slices/cartSlice";
 
 export default function Header() {
-  const { products, totalPrice } = useSelector((state) => state.cartReducer);
+  const { products, totalPrice } = useSelector(selectCart);
 
   const totalCount = products.reduce((sum, el) => (sum += el.count), 0);
 

@@ -14,7 +14,7 @@ export default function CartEmpty() {
         Для замовлення перейдіть на головну сторінку.
       </p>
       <img src={cartEmptyImg} alt="Empty cart" />
-      <Link to="/" class="button button--black">
+      <Link to="/" className="button button--black">
         <span>Повернутись на головну</span>
       </Link>
     </div>
