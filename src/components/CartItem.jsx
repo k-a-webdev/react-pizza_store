@@ -136,3 +136,6 @@ export default function CartItem({
     </div>
   );
 }
+
+// TODO:
+// - Add Link to all items for their pages
