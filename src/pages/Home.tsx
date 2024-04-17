@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
 // Redux Toolkit imports
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../redux/store";
 import {
   selectFilter,
   setActivePage,
@@ -13,14 +14,14 @@ import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 // My omponents
 import Categories from "../components/Categories";
-import { Sort, sortList } from "../components/Sort";
+import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import GetPizzasError from "../components/GetPizzasError";
 
-export default function Home() {
-  const dispatch = useDispatch();
+const Home: FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const isSearch = useRef(false);
@@ -28,16 +29,18 @@ export default function Home() {
 
   // Filters
   const { activeCategory, activeSort, activePage } = useSelector(
-    (state) => state.filterReducer
+    (state: RootState) => state.filterReducer
   );
   const searchValue = useSelector(selectFilter).searchValue;
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setActivePage(number));
   };
 
   // Pizzas
-  const pizzas = useSelector((state) => state.pizzasReducer.items);
-  const isLoading = useSelector((state) => state.pizzasReducer.isLoading);
+  const pizzas = useSelector((state: RootState) => state.pizzasReducer.items);
+  const isLoading = useSelector(
+    (state: RootState) => state.pizzasReducer.isLoading
+  );
 
   const getPizzas = () => {
     const sortInfo = sortList[activeSort].type;
@@ -63,11 +66,13 @@ export default function Home() {
           return true;
         } else return false;
       });
+      console.log(params);
 
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          activeCategory: Number(params.category),
+          activeSort: sort,
+          activePage: Number(params.page),
         })
       );
       isSearch.current = true;
@@ -134,4 +139,6 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
+
+export default Home;

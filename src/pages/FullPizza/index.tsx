@@ -1,42 +1,47 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactElement } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+import { RootState } from "../../redux/store";
 import { addProduct } from "../../redux/slices/cartSlice";
+import { PizzaItem } from "../../redux/slices/pizzasSlice";
 
 import styles from "./Profile.module.scss";
 
-export default function FullPizza() {
+export default function FullPizza(): ReactElement {
   const navigate = useNavigate();
 
-  const [pizza, setPizza] = useState({});
+  const [pizza, setPizza] = useState<PizzaItem>();
   const { id } = useParams();
 
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const typeNames = ["тонка", "традиційна"];
   const dispatch = useDispatch();
-  const cartPizza = useSelector((state) =>
+  const cartPizza = useSelector((state: RootState) =>
     state.cartReducer.products.find(
       (el) =>
-        el.id === id &&
+        el.id === Number(id) &&
         el.size === activeSize &&
         el.type === typeNames[activeType]
     )
   );
 
   const onClickAdd = () => {
-    const selectedPizza = {
-      id,
-      title: pizza.title,
-      price: pizza.price,
-      imageUrl: pizza.imageUrl,
-      type: typeNames[activeType],
-      size: activeSize,
-    };
+    if (pizza) {
+      const selectedPizza = {
+        id: Number(id),
+        title: pizza.title,
+        price: pizza.price,
+        imageUrl: pizza.imageUrl,
+        type: typeNames[activeType],
+        size: activeSize,
+        count: 0,
+      };
 
-    dispatch(addProduct(selectedPizza));
+      dispatch(addProduct(selectedPizza));
+    }
   };
 
   useEffect(() => {
@@ -56,7 +61,7 @@ export default function FullPizza() {
       });
   }, []);
 
-  if (pizza.length === 0) {
+  if (!pizza) {
     return <div className="container">Loading....</div>;
   }
 
@@ -68,6 +73,7 @@ export default function FullPizza() {
         </div>
         <div className={styles.profile__info}>
           <h1>{pizza.title}</h1>
+          <h1>{pizza.price}</h1>
           <div className={`pizza-block__selector ${styles.details}`}>
             <ul>
               {Object.keys(pizza).length > 0 &&

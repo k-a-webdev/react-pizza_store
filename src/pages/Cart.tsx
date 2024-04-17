@@ -1,13 +1,17 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC } from "react";
 import { Link } from "react-router-dom";
+
+// Redux Toolkit
+import { useSelector } from "react-redux";
 import { clearCart, selectCart } from "../redux/slices/cartSlice";
+
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
+import { useAppDispatch } from "../redux/store";
 
-export default function Cart() {
+const Cart: FC = () => {
   const { products, totalPrice } = useSelector(selectCart);
-  const dispatcher = useDispatch();
+  const dispatcher = useAppDispatch();
 
   const totalCount = products.reduce((sum, el) => (sum += el.count), 0);
 
@@ -103,7 +107,7 @@ export default function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {products.map((el, i) => {
+          {products.map((el, i: number) => {
             return <CartItem {...el} key={i} />;
           })}
         </div>
@@ -149,4 +153,6 @@ export default function Cart() {
       </div>
     </div>
   );
-}
+};
+
+export default Cart;

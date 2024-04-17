@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 // Redux Toolkit imports
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../redux/store";
 import { setActiveSort } from "../redux/slices/filterSlice";
+
+type PopupClick = MouseEvent & {
+  composedPath: () => Node[];
+};
 
 export const sortList = [
   { name: "популярністю (DESC)", type: "rating" },
@@ -13,22 +18,30 @@ export const sortList = [
   { name: "алфавітом (ASC)", type: "-title" },
 ];
 
-export function Sort() {
+const Sort: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const sortRef = useRef(null);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   // Redux variables
-  const dispatch = useDispatch();
-  const activeSort = useSelector((state) => state.filterReducer.activeSort);
+  const dispatch = useAppDispatch();
+  const activeSort = useSelector(
+    (state: RootState) => state.filterReducer.activeSort
+  );
 
-  const onChangeSort = (i) => {
+  const onChangeSort = (i: number) => {
     dispatch(setActiveSort(i));
     setIsOpen(false);
   };
 
   useEffect(() => {
-    const onClickOutside = (e) => {
-      if (!e.composedPath().includes(sortRef.current) && isOpen)
+    const onClickOutside = (e: MouseEvent) => {
+      const _event = e as PopupClick;
+
+      if (
+        sortRef.current &&
+        isOpen &&
+        !_event.composedPath().includes(sortRef.current)
+      )
         setIsOpen(false);
     };
 
@@ -76,7 +89,9 @@ export function Sort() {
       )}
     </div>
   );
-}
+};
+
+export default Sort;
 
 // TODO:
 // - check styles of popup (touch to the border of the block)

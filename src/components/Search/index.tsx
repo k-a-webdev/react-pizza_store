@@ -1,24 +1,24 @@
-import { useCallback, useRef, useState } from "react";
+import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 
 import styles from "./Search.module.scss";
-import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
+import { useAppDispatch } from "../../redux/store";
 
-export default function Search() {
+const Search: FC = () => {
   const [inputValue, setInputValue] = useState("");
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const setGlobalSearch = useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       dispatch(setSearchValue(value));
     }, 400),
     []
   );
 
-  const onChangeSearch = (e) => {
+  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setGlobalSearch(value);
     setInputValue(value);
@@ -26,7 +26,7 @@ export default function Search() {
   const onClearSearch = () => {
     dispatch(setSearchValue(""));
     setInputValue("");
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (
@@ -44,7 +44,7 @@ export default function Search() {
           style={{
             fill: "none",
             stroke: "#000",
-            strokeMiterLimit: 10,
+            strokeMiterlimit: 10,
             strokeWidth: "32px",
           }}
         />
@@ -53,7 +53,7 @@ export default function Search() {
             fill: "none",
             stroke: "#000",
             strokeLinecap: "round",
-            strokeMiterLimit: 10,
+            strokeMiterlimit: 10,
             strokeWidth: "32px",
           }}
           x1="338.29"
@@ -86,8 +86,8 @@ export default function Search() {
                 fill: "none",
                 stroke: "#000",
                 strokeLinecap: "round",
-                strokeLineJoin: "round",
-                strokeiWdth: "2px",
+                strokeLinejoin: "round",
+                strokeWidth: "2px",
               }}
               x1="7"
               x2="25"
@@ -99,8 +99,8 @@ export default function Search() {
                 fill: "none",
                 stroke: "#000",
                 strokeLinecap: "round",
-                strokeLineJoin: "round",
-                strokeiWdth: "2px",
+                strokeLinejoin: "round",
+                strokeWidth: "2px",
               }}
               x1="7"
               x2="25"
@@ -112,4 +112,6 @@ export default function Search() {
       )}
     </div>
   );
-}
+};
+
+export default Search;

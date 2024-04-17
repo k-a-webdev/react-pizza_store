@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "../components/Header";
+import { FC } from "react";
 
-export default function MainLayout() {
+const MainLayout: FC = () => {
   return (
     <div className="wrapper">
       <Header />
@@ -11,4 +12,6 @@ export default function MainLayout() {
       </div>
     </div>
   );
-}
+};
+
+export default MainLayout;

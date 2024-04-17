@@ -1,8 +1,14 @@
+import { FC } from "react";
 import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
 
-export default function index({ onChangePage, activePage }) {
+type PaginationProps = {
+  onChangePage: (page: number) => void;
+  activePage: number;
+};
+
+const Pagination: FC<PaginationProps> = ({ onChangePage, activePage }) => {
   return (
     <ReactPaginate
       className={styles.root}
@@ -16,7 +22,9 @@ export default function index({ onChangePage, activePage }) {
       renderOnZeroPageCount={null}
     />
   );
-}
+};
+
+export default Pagination;
 
 // TODO:
 // Moved here some Redux logic from the Home.jsx

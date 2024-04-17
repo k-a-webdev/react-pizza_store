@@ -1,8 +1,11 @@
+import { FC } from "react";
+
 // Redux Toolkit imports
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../redux/store";
 import { setActiveCategory } from "../redux/slices/filterSlice";
 
-export default function Categories() {
+const Categories: FC = () => {
   const categorieList = [
     "Всі",
     "М'ясні",
@@ -13,12 +16,12 @@ export default function Categories() {
   ];
 
   // Redux variables
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const activeCategory = useSelector(
-    (state) => state.filterReducer.activeCategory
+    (state: RootState) => state.filterReducer.activeCategory
   );
 
-  const onChangeCategory = (index) => {
+  const onChangeCategory = (index: number) => {
     dispatch(setActiveCategory(index));
   };
 
@@ -39,7 +42,9 @@ export default function Categories() {
       </ul>
     </div>
   );
-}
+};
+
+export default Categories;
 
 // TODO
 // -

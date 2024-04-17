@@ -1,12 +1,24 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import { FC } from "react";
+
 import {
+  ICartItem,
   addProduct,
   clearProducts,
   removeProduct,
 } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "../redux/store";
 
-export default function CartItem({
+type CartItemsProps = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  type: string;
+  size: number;
+  price: number;
+  count: number;
+};
+
+const CartItem: FC<CartItemsProps> = ({
   id,
   imageUrl,
   title,
@@ -14,8 +26,8 @@ export default function CartItem({
   size,
   price,
   count,
-}) {
-  const dispatch = useDispatch();
+}) => {
+  const dispatch = useAppDispatch();
 
   return (
     <div className="cart__item">
@@ -38,7 +50,7 @@ export default function CartItem({
                 type,
                 size,
                 price,
-              })
+              } as ICartItem)
             )
           }
         >
@@ -69,6 +81,9 @@ export default function CartItem({
                 type,
                 size,
                 price,
+                count,
+                title,
+                imageUrl,
               })
             )
           }
@@ -107,9 +122,7 @@ export default function CartItem({
                 id,
                 type,
                 size,
-                price,
-                count,
-              })
+              } as ICartItem)
             );
           }
         }}
@@ -135,7 +148,9 @@ export default function CartItem({
       </div>
     </div>
   );
-}
+};
+
+export default CartItem;
 
 // TODO:
 // - Add Link to all items for their pages

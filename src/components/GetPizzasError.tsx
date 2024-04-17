@@ -1,8 +1,10 @@
-export default function GetPizzasError() {
+import { FC } from "react";
+
+const GetPizzasError: FC = () => {
   return (
     <div className="cart cart--empty">
       <h2>
-        При завантаженні даних виникла помилка <icon>😕</icon>
+        При завантаженні даних виникла помилка <span>😕</span>
       </h2>
       <p>
         Скоріше за все, сервіс скоро відновиться.
@@ -11,4 +13,6 @@ export default function GetPizzasError() {
       </p>
     </div>
   );
-}
+};
+
+export default GetPizzasError;
