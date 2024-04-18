@@ -171,6 +171,24 @@ body {
             display: none;
           }
         }
+
+        &:disabled {
+          cursor: default;
+          opacity: 0.4;
+          border-color: #787878;
+
+          svg path {
+            fill: #787878;
+          }
+
+          &:hover {
+            background-color: #787878;
+          }
+
+          &:active {
+            transform: none;
+          }
+        }
       }
 
       b {

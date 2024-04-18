@@ -57,12 +57,7 @@ const cartSlice = createSlice({
 
       if (findIndex || findIndex === 0) {
         const findProduct = state.products[findIndex];
-
-        if (findProduct.count > 1) {
-          findProduct.count--;
-        } else {
-          state.products.splice(findIndex, 1);
-        }
+        findProduct.count--;
       }
 
       state.totalPrice -= action.payload.price;
