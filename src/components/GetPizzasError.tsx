@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const GetPizzasError: FC = () => {
+export const GetPizzasError: FC = () => {
   return (
     <div className="cart cart--empty">
       <h2>
@@ -14,5 +14,3 @@ const GetPizzasError: FC = () => {
     </div>
   );
 };
-
-export default GetPizzasError;

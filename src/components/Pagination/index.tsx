@@ -8,7 +8,10 @@ type PaginationProps = {
   activePage: number;
 };
 
-const Pagination: FC<PaginationProps> = ({ onChangePage, activePage }) => {
+export const Pagination: FC<PaginationProps> = ({
+  onChangePage,
+  activePage,
+}) => {
   return (
     <ReactPaginate
       className={styles.root}
@@ -23,8 +26,6 @@ const Pagination: FC<PaginationProps> = ({ onChangePage, activePage }) => {
     />
   );
 };
-
-export default Pagination;
 
 // TODO:
 // Moved here some Redux logic from the Home.jsx

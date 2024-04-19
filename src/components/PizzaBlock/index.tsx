@@ -15,7 +15,7 @@ type PizzaBlockProps = {
   id: number;
 };
 
-const PizzaBlock: FC<PizzaBlockProps> = ({
+export const PizzaBlock: FC<PizzaBlockProps> = ({
   title,
   price,
   imageUrl,
@@ -112,5 +112,3 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
     </div>
   );
 };
-
-export default PizzaBlock;

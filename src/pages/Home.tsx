@@ -10,12 +10,15 @@ import { setActivePage, setFilters } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizzas/asyncActions";
 
 // My omponents
-import Categories from "../components/Categories";
-import Sort, { sortList } from "../components/Sort";
-import PizzaBlock from "../components/PizzaBlock";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import Pagination from "../components/Pagination";
-import GetPizzasError from "../components/GetPizzasError";
+import {
+  Categories,
+  Sort,
+  sortList,
+  PizzaBlock,
+  Skeleton,
+  Pagination,
+  GetPizzasError,
+} from "../components";
 
 const Home: FC = () => {
   const dispatch = useAppDispatch();

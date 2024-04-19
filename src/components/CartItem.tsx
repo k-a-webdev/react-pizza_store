@@ -14,7 +14,7 @@ type CartItemsProps = {
   count: number;
 };
 
-const CartItem: FC<CartItemsProps> = ({
+export const CartItem: FC<CartItemsProps> = ({
   id,
   imageUrl,
   title,
@@ -146,8 +146,6 @@ const CartItem: FC<CartItemsProps> = ({
     </div>
   );
 };
-
-export default CartItem;
 
 // TODO:
 // - Add Link to all items for their pages
