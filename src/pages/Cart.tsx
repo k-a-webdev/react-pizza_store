@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 // Redux Toolkit
 import { useSelector } from "react-redux";
-import { clearCart, selectCart } from "../redux/slices/cartSlice";
+import { clearCart } from "../redux/cart/slice";
+import { selectCart } from "../redux/cart/selectors";
 
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";

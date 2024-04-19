@@ -3,7 +3,7 @@ import React from "react";
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
-import { setActiveCategory } from "../redux/slices/filterSlice";
+import { setActiveCategory } from "../redux/filter/slice";
 
 const Categories: React.FC = React.memo(() => {
   const categorieList = [

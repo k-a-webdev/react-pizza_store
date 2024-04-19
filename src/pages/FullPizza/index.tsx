@@ -4,8 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from "../../redux/store";
-import { addProduct } from "../../redux/slices/cartSlice";
-import { PizzaItem } from "../../redux/slices/pizzasSlice";
+import { addProduct } from "../../redux/cart/slice";
+import { PizzaItem } from "../../redux/pizzas/types";
 
 import styles from "./Profile.module.scss";
 

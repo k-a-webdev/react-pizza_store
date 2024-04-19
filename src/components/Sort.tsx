@@ -2,7 +2,7 @@ import React from "react";
 
 // Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
-import { setActiveSort } from "../redux/slices/filterSlice";
+import { setActiveSort } from "../redux/filter/slice";
 
 type PopupClick = MouseEvent & {
   composedPath: () => Node[];

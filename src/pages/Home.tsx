@@ -5,12 +5,9 @@ import qs from "qs";
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
-import {
-  selectFilter,
-  setActivePage,
-  setFilters,
-} from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { selectFilter } from "../redux/filter/selectors";
+import { setActivePage, setFilters } from "../redux/filter/slice";
+import { fetchPizzas } from "../redux/pizzas/asyncActions";
 
 // My omponents
 import Categories from "../components/Categories";

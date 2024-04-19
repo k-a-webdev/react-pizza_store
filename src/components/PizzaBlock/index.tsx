@@ -2,7 +2,8 @@ import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { ICartItem, addProduct } from "../../redux/slices/cartSlice";
+import { ICartItem } from "../../redux/cart/types";
+import { addProduct } from "../../redux/cart/slice";
 import { RootState } from "../../redux/store";
 
 type PizzaBlockProps = {
