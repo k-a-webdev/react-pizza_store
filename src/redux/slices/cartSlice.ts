@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+import { getCartFromLS } from "../../utils/getCartFromLS";
+
 export interface ICartItem {
   id: number;
   title: string;
@@ -16,9 +18,11 @@ interface ICartState {
   totalPrice: number;
 }
 
+const cartData = getCartFromLS();
+
 const initialState: ICartState = {
-  products: [],
-  totalPrice: 0,
+  products: cartData.products,
+  totalPrice: cartData.totalPrice,
 };
 
 const cartSlice = createSlice({
@@ -92,4 +96,4 @@ export const { addProduct, removeProduct, clearProducts, clearCart } =
 export default cartSlice.reducer;
 
 // TO DO
-// Add func which clear all pizzas in row
+// Add totalCount
