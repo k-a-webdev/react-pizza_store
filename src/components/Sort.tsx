@@ -1,8 +1,7 @@
-import { FC, useEffect, useRef, useState } from "react";
+import React from "react";
 
 // Redux Toolkit imports
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../redux/store";
+import { useAppDispatch } from "../redux/store";
 import { setActiveSort } from "../redux/slices/filterSlice";
 
 type PopupClick = MouseEvent & {
@@ -18,22 +17,19 @@ export const sortList = [
   { name: "алфавітом (ASC)", type: "-title" },
 ];
 
-const Sort: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const sortRef = useRef<HTMLDivElement>(null);
+const Sort: React.FC<{ activeSort: number }> = React.memo(({ activeSort }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   // Redux variables
   const dispatch = useAppDispatch();
-  const activeSort = useSelector(
-    (state: RootState) => state.filterReducer.activeSort
-  );
 
   const onChangeSort = (i: number) => {
     dispatch(setActiveSort(i));
     setIsOpen(false);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
       const _event = e as PopupClick;
 
@@ -89,7 +85,7 @@ const Sort: FC = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;
 

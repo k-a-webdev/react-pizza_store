@@ -1,11 +1,11 @@
-import { FC } from "react";
+import React from "react";
 
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { setActiveCategory } from "../redux/slices/filterSlice";
 
-const Categories: FC = () => {
+const Categories: React.FC = React.memo(() => {
   const categorieList = [
     "Всі",
     "М'ясні",
@@ -42,7 +42,7 @@ const Categories: FC = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;
 

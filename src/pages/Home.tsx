@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
@@ -32,9 +32,9 @@ const Home: FC = () => {
     (state: RootState) => state.filterReducer
   );
   const searchValue = useSelector(selectFilter).searchValue;
-  const onChangePage = (number: number) => {
+  const onChangePage = useCallback((number: number) => {
     dispatch(setActivePage(number));
-  };
+  }, []);
 
   // Pizzas
   const pizzas = useSelector((state: RootState) => state.pizzasReducer.items);
@@ -66,7 +66,6 @@ const Home: FC = () => {
           return true;
         } else return false;
       });
-      console.log(params);
 
       dispatch(
         setFilters({
@@ -120,7 +119,7 @@ const Home: FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort {...{ activeSort }} />
       </div>
       {isLoading !== "error" ? (
         <>
