@@ -16,10 +16,7 @@ import logoSvg from "../assets/img/pizza-logo.svg";
 export const Header: FC = () => {
   const isMounted = useRef(false);
 
-  const { products, totalPrice } = useSelector(selectCart);
-  const totalCount = () => {
-    return products.reduce((sum, el) => (sum += el.count), 0);
-  };
+  const { products, totalPrice, totalCount } = useSelector(selectCart);
 
   const location = useLocation();
 
@@ -82,7 +79,7 @@ export const Header: FC = () => {
               />
             </svg>
 
-            <span>{totalCount()}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

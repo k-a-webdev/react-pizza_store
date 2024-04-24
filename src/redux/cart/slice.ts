@@ -9,6 +9,7 @@ const cartData = getCartFromLS();
 const initialState: ICartState = {
   products: cartData.products,
   totalPrice: cartData.totalPrice,
+  totalCount: cartData.totalCount,
 };
 
 const cartSlice = createSlice({
@@ -34,6 +35,7 @@ const cartSlice = createSlice({
         });
 
       state.totalPrice += newProduct.price;
+      state.totalCount += 1;
     },
     removeProduct(state, action: PayloadAction<ICartItem>) {
       const oldProduct = action.payload;
@@ -51,6 +53,7 @@ const cartSlice = createSlice({
       }
 
       state.totalPrice -= action.payload.price;
+      state.totalCount -= 1;
     },
     clearProducts(state, action: PayloadAction<ICartItem>) {
       const oldProduct = action.payload;
@@ -66,10 +69,12 @@ const cartSlice = createSlice({
         state.products[findIndex].price * state.products[findIndex].count;
 
       state.products.splice(findIndex, 1);
+      state.totalCount -= state.products[findIndex].count;
     },
     clearCart(state) {
       state.products = [];
       state.totalPrice = 0;
+      state.totalCount = 0;
     },
   },
 });
@@ -78,6 +83,3 @@ export const { addProduct, removeProduct, clearProducts, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
-
-// TO DO
-// Add totalCount

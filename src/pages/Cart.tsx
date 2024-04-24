@@ -13,11 +13,9 @@ import { CartItem, CartEmpty } from "../components";
 
 // Main block
 const Cart: FC = () => {
-  const { products, totalPrice } = useSelector(selectCart);
+  const { products, totalPrice, totalCount } = useSelector(selectCart);
 
   const dispatcher = useAppDispatch();
-
-  const totalCount = products.reduce((sum, el) => (sum += el.count), 0);
 
   if (!products.length) {
     return <CartEmpty />;

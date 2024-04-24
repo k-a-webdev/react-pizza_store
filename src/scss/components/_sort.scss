@@ -1,6 +1,7 @@
 @import "../variables";
 
 .sort {
+  cursor: pointer;
   position: relative;
   &__label {
     display: flex;
@@ -18,7 +19,6 @@
     span {
       color: $orange;
       border-bottom: 1px dashed $orange;
-      cursor: pointer;
     }
   }
 
