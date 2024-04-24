@@ -1,11 +1,15 @@
+// Main imports
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
+// Pages
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
 
+// Styles
 import "./scss/app.scss";
 
+// Lazy loading
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
 const NotFound = lazy(
   () => import(/* webpackChunkName: "NotFound" */ "./pages/NotFound")
@@ -14,6 +18,7 @@ const FullPizza = lazy(
   () => import(/* webpackChunkName: "FullPizza" */ "./pages/FullPizza")
 );
 
+// Main block
 export default function App() {
   return (
     <Routes>

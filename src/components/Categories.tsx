@@ -1,3 +1,4 @@
+// Main imports
 import React from "react";
 
 // Redux Toolkit imports
@@ -5,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { setActiveCategory } from "../redux/filter/slice";
 
+// Main block
 export const Categories: React.FC = React.memo(() => {
   const categorieList = [
     "Всі",
@@ -15,7 +17,7 @@ export const Categories: React.FC = React.memo(() => {
     "Закриті",
   ];
 
-  // Redux variables
+  // Redux logic
   const dispatch = useAppDispatch();
   const activeCategory = useSelector(
     (state: RootState) => state.filterReducer.activeCategory
@@ -43,6 +45,3 @@ export const Categories: React.FC = React.memo(() => {
     </div>
   );
 });
-
-// TODO
-// -

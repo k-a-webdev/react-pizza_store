@@ -1,22 +1,27 @@
+// Main imports
 import { FC, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+// Redux imports
 import { useSelector } from "react-redux";
-
-import { Search } from "../components";
-
-import logoSvg from "../assets/img/pizza-logo.svg";
 import { selectCart } from "../redux/cart/selectors";
 
+// My components
+import { Search } from "../components";
+
+// Asset imports
+import logoSvg from "../assets/img/pizza-logo.svg";
+
+// Main block
 export const Header: FC = () => {
+  const isMounted = useRef(false);
+
   const { products, totalPrice } = useSelector(selectCart);
-
-  const location = useLocation();
-
   const totalCount = () => {
     return products.reduce((sum, el) => (sum += el.count), 0);
   };
 
-  const isMounted = useRef(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (isMounted.current) {
@@ -46,6 +51,7 @@ export const Header: FC = () => {
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₴</span>
             <div className="button__delimiter"></div>
+
             <svg
               width="18"
               height="18"
@@ -75,6 +81,7 @@ export const Header: FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
+
             <span>{totalCount()}</span>
           </Link>
         </div>

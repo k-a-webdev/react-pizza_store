@@ -1,9 +1,12 @@
+// Main imports
 import { FC } from "react";
 
-import { addProduct, clearProducts, removeProduct } from "../redux/cart/slice";
+// Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
+import { addProduct, clearProducts, removeProduct } from "../redux/cart/slice";
 import { ICartItem } from "../redux/cart/types";
 
+// Types
 type CartItemsProps = {
   id: number;
   imageUrl: string;
@@ -14,6 +17,7 @@ type CartItemsProps = {
   count: number;
 };
 
+// Main block
 export const CartItem: FC<CartItemsProps> = ({
   id,
   imageUrl,
@@ -30,12 +34,14 @@ export const CartItem: FC<CartItemsProps> = ({
       <div className="cart__item-img">
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
+
       <div className="cart__item-info">
         <h3>{title}</h3>
         <p>
           {type}, {size} см.
         </p>
       </div>
+
       <div className="cart__item-count">
         <button
           disabled={count === 1}
@@ -68,7 +74,9 @@ export const CartItem: FC<CartItemsProps> = ({
             />
           </svg>
         </button>
+
         <b>{count}</b>
+
         <button
           className="button button--outline button--circle cart__item-count-plus"
           onClick={() =>
@@ -103,9 +111,11 @@ export const CartItem: FC<CartItemsProps> = ({
           </svg>
         </button>
       </div>
+
       <div className="cart__item-price">
         <b>{price * count} ₴</b>
       </div>
+
       <div className="cart__item-remove">
         <button
           className="button button--outline button--circle"

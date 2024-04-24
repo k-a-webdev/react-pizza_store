@@ -1,24 +1,30 @@
-import axios from "axios";
+// Main imports
 import { useEffect, useState, ReactElement } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
+// Redux Toolkit imports
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { addProduct } from "../../redux/cart/slice";
 import { PizzaItem } from "../../redux/pizzas/types";
 
+// Styles
 import styles from "./Profile.module.scss";
 
+// Main block
 export default function FullPizza(): ReactElement {
-  const navigate = useNavigate();
-
   const [pizza, setPizza] = useState<PizzaItem>();
-  const { id } = useParams();
-
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
-  const typeNames = ["тонка", "традиційна"];
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  const typeNames = ["тонка", "традиційна"];
+
   const cartPizza = useSelector((state: RootState) =>
     state.cartReducer.products.find(
       (el) =>
@@ -131,3 +137,6 @@ export default function FullPizza(): ReactElement {
     </div>
   );
 }
+
+// TODO
+// - додати кнопку "повернутись на головну" й узагалі зробити її компонентом, бо вона є на всіх сторінках окрім Home

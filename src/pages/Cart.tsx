@@ -1,3 +1,4 @@
+// Main imports
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,10 +8,13 @@ import { useAppDispatch } from "../redux/store";
 import { clearCart } from "../redux/cart/slice";
 import { selectCart } from "../redux/cart/selectors";
 
+// My components
 import { CartItem, CartEmpty } from "../components";
 
+// Main block
 const Cart: FC = () => {
   const { products, totalPrice } = useSelector(selectCart);
+
   const dispatcher = useAppDispatch();
 
   const totalCount = products.reduce((sum, el) => (sum += el.count), 0);

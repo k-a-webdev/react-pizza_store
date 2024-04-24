@@ -1,9 +1,11 @@
+// Main imports
 import React from "react";
 
 // Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
 import { setActiveSort } from "../redux/filter/slice";
 
+// Types
 type PopupClick = MouseEvent & {
   composedPath: () => Node[];
 };
@@ -17,12 +19,12 @@ export const sortList = [
   { name: "алфавітом (ASC)", type: "-title" },
 ];
 
+// Main block
 export const Sort: React.FC<{ activeSort: number }> = React.memo(
   ({ activeSort }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const sortRef = React.useRef<HTMLDivElement>(null);
 
-    // Redux variables
     const dispatch = useAppDispatch();
 
     const onChangeSort = (i: number) => {

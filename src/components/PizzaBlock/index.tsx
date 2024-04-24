@@ -1,11 +1,14 @@
+// Main imports
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+// Redux Toolkit imports
+import { useDispatch, useSelector } from "react-redux";
 import { ICartItem } from "../../redux/cart/types";
 import { addProduct } from "../../redux/cart/slice";
 import { RootState } from "../../redux/store";
 
+// Types
 type PizzaBlockProps = {
   title: string;
   price: number;
@@ -15,6 +18,7 @@ type PizzaBlockProps = {
   id: number;
 };
 
+// Main block
 export const PizzaBlock: FC<PizzaBlockProps> = ({
   title,
   price,
@@ -28,7 +32,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
 
   const typeNames = ["тонка", "традиційна"];
 
-  // Redux
+  // Redux logic
   const dispatch = useDispatch();
   const cartPizza = useSelector((state: RootState) =>
     state.cartReducer.products.find(
@@ -59,6 +63,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
       </Link>
+
       <div className="pizza-block__selector">
         <ul>
           {types.map((type) => {

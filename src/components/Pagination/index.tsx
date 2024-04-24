@@ -2,6 +2,7 @@ import { FC } from "react";
 import ReactPaginate from "react-paginate";
 
 import styles from "./Pagination.module.scss";
+import { useWhyDidYouUpdate } from "ahooks";
 
 type PaginationProps = {
   onChangePage: (page: number) => void;
@@ -26,6 +27,3 @@ export const Pagination: FC<PaginationProps> = ({
     />
   );
 };
-
-// TODO:
-// Moved here some Redux logic from the Home.jsx

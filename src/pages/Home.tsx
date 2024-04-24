@@ -1,3 +1,4 @@
+// Main imports
 import { FC, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
@@ -9,7 +10,7 @@ import { selectFilter } from "../redux/filter/selectors";
 import { setActivePage, setFilters } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizzas/asyncActions";
 
-// My omponents
+// My components
 import {
   Categories,
   Sort,
@@ -20,12 +21,13 @@ import {
   GetPizzasError,
 } from "../components";
 
+// Main block
 const Home: FC = () => {
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const isSearch = useRef(false);
-  const isMounted = useRef(false); // To check if there was a first render
 
   // Filters
   const { activeCategory, activeSort, activePage } = useSelector(
@@ -119,6 +121,7 @@ const Home: FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories />
+
         <Sort {...{ activeSort }} />
       </div>
       {isLoading !== "error" ? (
@@ -131,6 +134,7 @@ const Home: FC = () => {
               ? pizzasItems
               : null}
           </div>
+
           <Pagination {...{ onChangePage, activePage }} />
         </>
       ) : (
