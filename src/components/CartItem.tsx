@@ -1,5 +1,6 @@
 // Main imports
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 // Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
@@ -35,12 +36,12 @@ export const CartItem: FC<CartItemsProps> = ({
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
 
-      <div className="cart__item-info">
+      <Link to={`/pizza/${id}`} className="cart__item-info">
         <h3>{title}</h3>
         <p>
           {type}, {size} см.
         </p>
-      </div>
+      </Link>
 
       <div className="cart__item-count">
         <button
@@ -156,6 +157,3 @@ export const CartItem: FC<CartItemsProps> = ({
     </div>
   );
 };
-
-// TODO:
-// - Add Link to all items for their pages
