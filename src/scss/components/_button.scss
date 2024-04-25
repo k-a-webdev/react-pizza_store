@@ -148,4 +148,19 @@
       font-size: 16px;
     }
   }
+
+  &__go-home {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%) !important;
+
+    span {
+      font-size: 1.7rem;
+    }
+  }
 }

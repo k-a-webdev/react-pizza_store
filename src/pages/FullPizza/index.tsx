@@ -11,6 +11,7 @@ import { PizzaItem } from "../../redux/pizzas/types";
 
 // Styles
 import styles from "./Profile.module.scss";
+import { ButtonHome } from "../../components";
 
 // Main block
 export default function FullPizza(): ReactElement {
@@ -134,6 +135,8 @@ export default function FullPizza(): ReactElement {
           </div>
         </div>
       </div>
+
+      <ButtonHome />
     </div>
   );
 }

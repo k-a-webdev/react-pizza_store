@@ -9,3 +9,4 @@ export * from "./Categories";
 export * from "./GetPizzasError";
 export * from "./Header";
 export * from "./Sort";
+export * from "./ButtonHome";
