@@ -1,13 +1,13 @@
 // Main imports
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { ICartItem } from "../../redux/cart/types";
 import { addProduct } from "../../redux/cart/slice";
 import { RootState, useAppDispatch } from "../../redux/store";
-import { useTranslation } from "react-i18next";
 
 // Types
 type PizzaBlockProps = {

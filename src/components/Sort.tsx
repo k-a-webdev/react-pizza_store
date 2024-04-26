@@ -1,10 +1,10 @@
 // Main imports
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 // Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
 import { setActiveSort } from "../redux/filter/slice";
-import { useTranslation } from "react-i18next";
 
 // Types
 type PopupClick = MouseEvent & {

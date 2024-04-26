@@ -12,6 +12,8 @@ import { PizzaItem } from "../../redux/pizzas/types";
 
 // Styles
 import styles from "./Profile.module.scss";
+
+// My components
 import { ButtonHome } from "../../components";
 
 // Main block

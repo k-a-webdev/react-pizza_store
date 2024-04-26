@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { fetchUSD } from "./asyncActions";
 import { ICartItem, ICartState } from "./types";
 
 import { getCartFromLS } from "../../utils/getCartFromLS";
-import { fetchUSD } from "./asyncActions";
 
 const cartData = getCartFromLS();
 

@@ -1,7 +1,9 @@
 import { FC } from "react";
-import styles from "./NotFoundBlock.module.scss";
-import { ButtonHome } from "../index";
 import { useTranslation } from "react-i18next";
+
+import { ButtonHome } from "../index";
+
+import styles from "./NotFoundBlock.module.scss";
 
 export const NotFoundBlock: FC = () => {
   const { t } = useTranslation();

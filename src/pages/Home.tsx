@@ -1,6 +1,7 @@
 // Main imports
 import { FC, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import qs from "qs";
 
 // Redux Toolkit imports
@@ -9,7 +10,6 @@ import { RootState, useAppDispatch } from "../redux/store";
 import { selectFilter } from "../redux/filter/selectors";
 import { setActivePage, setFilters } from "../redux/filter/slice";
 import { fetchAllPizzas, fetchPizzas } from "../redux/pizzas/asyncActions";
-import { useTranslation } from "react-i18next";
 
 // My components
 import {

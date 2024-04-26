@@ -5,14 +5,14 @@ import { Route, Routes } from "react-router-dom";
 // Pages
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
+import Preloader from "./pages/Preloader";
 
 // Styles
 import "./scss/app.scss";
-import { useAppDispatch } from "./redux/store";
 
 // Redux imports
+import { useAppDispatch } from "./redux/store";
 import { fetchUSD } from "./redux/cart/asyncActions";
-import Preloader from "./pages/Preloader";
 
 // Lazy loading
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));

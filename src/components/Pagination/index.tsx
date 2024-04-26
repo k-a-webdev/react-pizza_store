@@ -1,9 +1,10 @@
 import { FC } from "react";
 import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../../redux/store";
 
 import styles from "./Pagination.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 
 type PaginationProps = {
   onChangePage: (page: number) => void;

@@ -1,16 +1,16 @@
 // Main imports
 import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 
 // Redux Toolkit imports
+import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { setSearchValue } from "../../redux/filter/slice";
+import { setPagesCount } from "../../redux/pizzas/slice";
 
 // Styles
 import styles from "./Search.module.scss";
-import { useTranslation } from "react-i18next";
-import { setPagesCount } from "../../redux/pizzas/slice";
-import { useSelector } from "react-redux";
 
 // Main block
 export const Search: FC = () => {

@@ -3,11 +3,11 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 // Redux Toolkit imports
+import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { addProduct, clearProducts, removeProduct } from "../redux/cart/slice";
 import { ICartItem } from "../redux/cart/types";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 // Types
 type CartItemsProps = {
