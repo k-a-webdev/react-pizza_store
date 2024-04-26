@@ -13,7 +13,12 @@ const initialState: IPizzaState = {
 const pizzasSlice = createSlice({
   name: "pizzas",
   initialState,
-  reducers: {},
+  reducers: {
+    setPagesCount(state, { payload }) {
+      if (payload.length > 8) state.pagesCount = 2;
+      else state.pagesCount = 1;
+    },
+  },
   extraReducers: (builder) => {
     // fetchPizzass
     builder.addCase(fetchPizzas.pending, (state) => {
@@ -46,3 +51,4 @@ const pizzasSlice = createSlice({
 });
 
 export default pizzasSlice.reducer;
+export const { setPagesCount } = pizzasSlice.actions;

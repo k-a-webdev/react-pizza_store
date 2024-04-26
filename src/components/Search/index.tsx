@@ -3,12 +3,14 @@ import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 
 // Redux Toolkit imports
-import { useAppDispatch } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { setSearchValue } from "../../redux/filter/slice";
 
 // Styles
 import styles from "./Search.module.scss";
 import { useTranslation } from "react-i18next";
+import { setPagesCount } from "../../redux/pizzas/slice";
+import { useSelector } from "react-redux";
 
 // Main block
 export const Search: FC = () => {
@@ -17,6 +19,9 @@ export const Search: FC = () => {
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { activeCategory } = useSelector(
+    (state: RootState) => state.filterReducer
+  );
 
   // Search processing
   const setGlobalSearch = useCallback(
@@ -29,6 +34,12 @@ export const Search: FC = () => {
     const value = e.target.value;
     setGlobalSearch(value);
     setInputValue(value);
+
+    if (value.length > 0) dispatch(setPagesCount(1));
+    else {
+      if (activeCategory) dispatch(setPagesCount(1));
+      else dispatch(setPagesCount(2));
+    }
   };
   const onClearSearch = () => {
     dispatch(setSearchValue(""));
