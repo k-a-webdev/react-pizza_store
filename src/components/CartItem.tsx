@@ -46,7 +46,7 @@ export const CartItem: FC<CartItemsProps> = ({
       </div>
 
       <Link to={`/pizza/${id}`} className="cart__item-info">
-        <h3>{i18n.resolvedLanguage === "en" ? title_en : title}</h3>
+        <h3>{i18n.resolvedLanguage === "en-US" ? title_en : title}</h3>
         <p>
           {typeNames[type]}, {size} {t("pizza.size")}
         </p>
@@ -125,7 +125,7 @@ export const CartItem: FC<CartItemsProps> = ({
 
       <div className="cart__item-price">
         <b>
-          {i18n.resolvedLanguage === "en"
+          {i18n.resolvedLanguage === "en-US"
             ? `${Math.ceil((price * count) / priceUSD)} $`
             : `${price * count} ₴`}
         </b>

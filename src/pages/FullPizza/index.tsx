@@ -84,7 +84,7 @@ export default function FullPizza(): ReactElement {
         </div>
         <div className={styles.profile__info}>
           <h1>
-            {i18n.resolvedLanguage === "en" ? pizza.title_en : pizza.title}
+            {i18n.resolvedLanguage === "en-US" ? pizza.title_en : pizza.title}
           </h1>
           <div className={`pizza-block__selector ${styles.details}`}>
             <ul>
@@ -118,7 +118,7 @@ export default function FullPizza(): ReactElement {
           </div>
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">
-              {i18n.resolvedLanguage === "en"
+              {i18n.resolvedLanguage === "en-US"
                 ? `${Math.ceil(pizza.price / priceUSD)} $`
                 : `${pizza.price} ₴`}
             </div>

@@ -65,7 +65,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
       <Link to={`pizza/${id}`}>
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">
-          {i18n.resolvedLanguage === "en" ? title_en : title}
+          {i18n.resolvedLanguage === "en-US" ? title_en : title}
         </h4>
       </Link>
 
@@ -99,7 +99,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">
-          {i18n.resolvedLanguage === "en"
+          {i18n.resolvedLanguage === "en-US"
             ? `from ${Math.ceil(price / priceUSD)} $`
             : `від ${price} ₴`}
         </div>

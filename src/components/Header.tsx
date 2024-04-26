@@ -50,7 +50,7 @@ export const Header: FC = () => {
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>
-              {i18n.resolvedLanguage === "en"
+              {i18n.resolvedLanguage === "en-US"
                 ? `${totalPrice_en} $`
                 : `${totalPrice} ₴`}
             </span>

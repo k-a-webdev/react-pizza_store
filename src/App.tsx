@@ -36,7 +36,7 @@ export default function App() {
       <Route path="/" element={<MainLayout />}>
         <Route path="" element={<Home />} />
         <Route
-          path="/cart"
+          path="cart"
           element={
             <Suspense fallback={<Preloader />}>
               <Cart />
@@ -44,7 +44,7 @@ export default function App() {
           }
         />
         <Route
-          path="/pizza/:id"
+          path="pizza/:id"
           element={
             <Suspense fallback={<Preloader />}>
               <FullPizza />

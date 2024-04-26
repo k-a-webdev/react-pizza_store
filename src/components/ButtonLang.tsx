@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 export const ButtonLang: React.FC = () => {
-  const langs = ["ua", "en"];
+  const langs = ["ua-UA", "en-US"];
 
   const { i18n } = useTranslation();
 

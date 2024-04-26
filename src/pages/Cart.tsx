@@ -123,7 +123,7 @@ const Cart: FC = () => {
               {" "}
               {t("cart.priceLabel")}
               <b>
-                {i18n.resolvedLanguage === "en"
+                {i18n.resolvedLanguage === "en-US"
                   ? `${totalPrice_en} $`
                   : `${totalPrice} ₴`}
               </b>{" "}

@@ -114,7 +114,7 @@ const Home: FC = () => {
 
   const pizzasItems = pizzas
     .filter((item) => {
-      if (i18n.resolvedLanguage === "ua")
+      if (i18n.resolvedLanguage === "ua-UA")
         return item.title.toLowerCase().includes(searchValue.toLowerCase());
       else
         return item.title_en.toLowerCase().includes(searchValue.toLowerCase());

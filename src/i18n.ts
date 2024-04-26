@@ -9,7 +9,10 @@ i18n
   .use(initReactI18next)
   .init({
     debug: false,
-    fallbackLng: "ua",
+    fallbackLng: "en-US",
+    backend: {
+      loadPath: "locales/{{lng}}/translation.json",
+    },
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
