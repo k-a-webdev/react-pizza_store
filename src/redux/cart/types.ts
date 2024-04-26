@@ -12,6 +12,7 @@ export interface ICartItem {
 export interface ICartState {
   products: ICartItem[];
   totalPrice: number;
+  totalPrice_en: number;
   totalCount: number;
   priceUSD: number;
 }

@@ -10,6 +10,7 @@ const cartData = getCartFromLS();
 const initialState: ICartState = {
   products: cartData.products,
   totalPrice: cartData.totalPrice,
+  totalPrice_en: 0,
   totalCount: cartData.totalCount,
   priceUSD: 0,
 };
@@ -37,6 +38,7 @@ const cartSlice = createSlice({
         });
 
       state.totalPrice += newProduct.price;
+      state.totalPrice_en += Math.ceil(newProduct.price / state.priceUSD);
       state.totalCount += 1;
     },
     removeProduct(state, action: PayloadAction<ICartItem>) {
@@ -55,6 +57,8 @@ const cartSlice = createSlice({
       }
 
       state.totalPrice -= action.payload.price;
+      state.totalPrice_en -= Math.ceil(action.payload.price / state.priceUSD);
+
       state.totalCount -= 1;
     },
     clearProducts(state, action: PayloadAction<ICartItem>) {
@@ -70,12 +74,18 @@ const cartSlice = createSlice({
       state.totalPrice -=
         state.products[findIndex].price * state.products[findIndex].count;
 
+      state.totalPrice_en -= Math.ceil(
+        (state.products[findIndex].price * state.products[findIndex].count) /
+          state.priceUSD
+      );
+
       state.products.splice(findIndex, 1);
       state.totalCount -= state.products[findIndex].count;
     },
     clearCart(state) {
       state.products = [];
       state.totalPrice = 0;
+      state.totalPrice_en = 0;
       state.totalCount = 0;
     },
   },

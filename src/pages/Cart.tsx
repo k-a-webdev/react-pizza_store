@@ -1,5 +1,6 @@
 // Main imports
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 // Redux Toolkit
 import { useSelector } from "react-redux";
@@ -9,11 +10,10 @@ import { selectCart } from "../redux/cart/selectors";
 
 // My components
 import { CartItem, CartEmpty, ButtonHome } from "../components";
-import { useTranslation } from "react-i18next";
 
 // Main block
 const Cart: FC = () => {
-  const { products, totalPrice, totalCount, priceUSD } =
+  const { products, totalPrice, totalCount, totalPrice_en } =
     useSelector(selectCart);
 
   const dispatcher = useAppDispatch();
@@ -124,7 +124,7 @@ const Cart: FC = () => {
               {t("cart.priceLabel")}
               <b>
                 {i18n.resolvedLanguage === "en"
-                  ? `${Math.ceil(totalPrice / priceUSD)} $`
+                  ? `${totalPrice_en} $`
                   : `${totalPrice} ₴`}
               </b>{" "}
             </span>

@@ -1,6 +1,7 @@
 // Main imports
 import { FC, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Redux imports
 import { useSelector } from "react-redux";
@@ -11,13 +12,12 @@ import { ButtonLang, Search } from "../components";
 
 // Asset imports
 import logoSvg from "../assets/img/pizza-logo.svg";
-import { useTranslation } from "react-i18next";
 
 // Main block
 export const Header: FC = () => {
   const isMounted = useRef(false);
 
-  const { products, totalPrice, totalCount, priceUSD } =
+  const { products, totalPrice, totalCount, totalPrice_en } =
     useSelector(selectCart);
 
   const location = useLocation();
@@ -51,7 +51,7 @@ export const Header: FC = () => {
           <Link to="/cart" className="button button--cart">
             <span>
               {i18n.resolvedLanguage === "en"
-                ? `${Math.ceil(totalPrice / priceUSD)} $`
+                ? `${totalPrice_en} $`
                 : `${totalPrice} ₴`}
             </span>
             <div className="button__delimiter"></div>
