@@ -1,6 +1,7 @@
 // Main imports
 import { useEffect, useState, ReactElement } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 
 // Redux Toolkit imports
@@ -21,17 +22,17 @@ export default function FullPizza(): ReactElement {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const { id } = useParams();
 
-  const typeNames = ["тонка", "традиційна"];
+  const typeNames = t("pizza.typeNames", { returnObjects: true }) as string[];
 
+  const { priceUSD } = useSelector((state: RootState) => state.cartReducer);
   const cartPizza = useSelector((state: RootState) =>
     state.cartReducer.products.find(
       (el) =>
-        el.id === Number(id) &&
-        el.size === activeSize &&
-        el.type === typeNames[activeType]
+        el.id === Number(id) && el.size === activeSize && el.type === activeType
     )
   );
 
@@ -40,9 +41,10 @@ export default function FullPizza(): ReactElement {
       const selectedPizza = {
         id: Number(id),
         title: pizza.title,
+        title_en: pizza.title_en,
         price: pizza.price,
         imageUrl: pizza.imageUrl,
-        type: typeNames[activeType],
+        type: activeType,
         size: activeSize,
         count: 0,
       };
@@ -69,7 +71,7 @@ export default function FullPizza(): ReactElement {
   }, []);
 
   if (!pizza) {
-    return <div className="container">Loading....</div>;
+    return <div className="container">{t("loadPageText")}</div>;
   }
 
   return (
@@ -79,8 +81,9 @@ export default function FullPizza(): ReactElement {
           <img src={pizza.imageUrl} alt="Pizza" />
         </div>
         <div className={styles.profile__info}>
-          <h1>{pizza.title}</h1>
-          <h1>{pizza.price}</h1>
+          <h1>
+            {i18n.resolvedLanguage === "en" ? pizza.title_en : pizza.title}
+          </h1>
           <div className={`pizza-block__selector ${styles.details}`}>
             <ul>
               {Object.keys(pizza).length > 0 &&
@@ -105,14 +108,18 @@ export default function FullPizza(): ReactElement {
                       className={activeSize === size ? "active" : ""}
                       key={size}
                     >
-                      {size} см.
+                      {size} {t("pizza.size")}
                     </li>
                   );
                 })}
             </ul>
           </div>
           <div className="pizza-block__bottom">
-            <div className="pizza-block__price">{pizza.price} ₴</div>
+            <div className="pizza-block__price">
+              {i18n.resolvedLanguage === "en"
+                ? `${Math.ceil(pizza.price / priceUSD)} $`
+                : `${pizza.price} ₴`}
+            </div>
             <button
               className="button button--outline button--add"
               onClick={onClickAdd}
@@ -129,7 +136,7 @@ export default function FullPizza(): ReactElement {
                   fill="white"
                 />
               </svg>
-              <span>Додати</span>
+              <span>{t("button.pizzaAdd")}</span>
               {cartPizza && <i>{cartPizza.count}</i>}
             </button>
           </div>
@@ -140,6 +147,3 @@ export default function FullPizza(): ReactElement {
     </div>
   );
 }
-
-// TODO
-// - додати кнопку "повернутись на головну" й узагалі зробити її компонентом, бо вона є на всіх сторінках окрім Home

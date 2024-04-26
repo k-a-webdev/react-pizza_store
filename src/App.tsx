@@ -1,6 +1,7 @@
 // Main imports
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Pages
 import Home from "./pages/Home";
@@ -8,6 +9,11 @@ import MainLayout from "./layouts/MainLayout";
 
 // Styles
 import "./scss/app.scss";
+import { useAppDispatch } from "./redux/store";
+import { setLang } from "./redux/pizzas/slice";
+
+// Redux imports
+import { fetchUSD } from "./redux/cart/asyncActions";
 
 // Lazy loading
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
@@ -20,6 +26,15 @@ const FullPizza = lazy(
 
 // Main block
 export default function App() {
+  const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.resolvedLanguage && dispatch(setLang(i18n.resolvedLanguage));
+
+    dispatch(fetchUSD());
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -27,7 +42,7 @@ export default function App() {
         <Route
           path="/cart"
           element={
-            <Suspense fallback="Loading....">
+            <Suspense fallback={t("loadPageText")}>
               <Cart />
             </Suspense>
           }
@@ -35,7 +50,7 @@ export default function App() {
         <Route
           path="/pizza/:id"
           element={
-            <Suspense fallback="Loading....">
+            <Suspense fallback={t("loadPageText")}>
               <FullPizza />
             </Suspense>
           }
@@ -43,7 +58,7 @@ export default function App() {
         <Route
           path="*"
           element={
-            <Suspense fallback="Loading....">
+            <Suspense fallback={t("loadPageText")}>
               <NotFound />
             </Suspense>
           }

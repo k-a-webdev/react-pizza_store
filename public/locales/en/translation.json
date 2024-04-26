@@ -1,0 +1,45 @@
+{
+  "loadPageText": "Loading...",
+
+  "header": {
+    "subTitle": "The most delicious pizza in the Universe",
+    "searchPlaceholder": "Search pizza...."
+  },
+  "categories": {
+    "categorieList": ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"]
+  },
+  "sort": {
+    "label": "Sort by:",
+    "sortListName": [
+      "rating (DESC)",
+      "rating (ASC)",
+      "price (DESC)",
+      "price (ASC)",
+      "alphabit (DESC)",
+      "alphabit (ASC)"
+    ]
+  },
+  "pizza": {
+    "pageTitle": "All pizzass",
+    "typeNames": ["thin", "traditional"],
+    "size": "cm."
+  },
+  "button": {
+    "pizzaAdd": "Add",
+    "cartClear": "Clear cart",
+    "backHome": "Back to the home page",
+    "payNow": "Pay now"
+  },
+  "cart": {
+    "pageTitle": "Cart",
+    "countLabel": "Total pizzas:",
+    "countSubLabel": "pcs.",
+    "priceLabel": "The order amount: ",
+    "clearCartConfirm": "Are you sure you want to remove items from the cart?",
+    "clearItemConfirm": "Do you really want to remove this item from the cart?"
+  },
+  "notFound": {
+    "title": "Not found any page on this url",
+    "subTitle": "Oops...."
+  }
+}

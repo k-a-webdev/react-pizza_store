@@ -9,12 +9,13 @@ import { RootState, useAppDispatch } from "../redux/store";
 import { selectFilter } from "../redux/filter/selectors";
 import { setActivePage, setFilters } from "../redux/filter/slice";
 import { fetchPizzas } from "../redux/pizzas/asyncActions";
+import { useTranslation } from "react-i18next";
 
 // My components
 import {
   Categories,
   Sort,
-  sortList,
+  sortListType,
   PizzaBlock,
   Skeleton,
   Pagination,
@@ -28,6 +29,7 @@ const Home: FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   // Filters
   const { activeCategory, activeSort, activePage } = useSelector(
@@ -45,7 +47,7 @@ const Home: FC = () => {
   );
 
   const getPizzas = () => {
-    const sortInfo = sortList[activeSort].type;
+    const sortInfo = sortListType[activeSort].type;
     const filterBy = sortInfo.replace("-", "");
     const filterOrder = sortInfo.includes("-") ? "asc" : "desc";
     const filterCategory = activeCategory ? `&category=${activeCategory}` : "";
@@ -61,7 +63,7 @@ const Home: FC = () => {
     if (urlParams) {
       const params = qs.parse(urlParams.substring(1));
 
-      const sort = sortList.findIndex((el, i) => {
+      const sort = sortListType.findIndex((el, i) => {
         if (
           el.type === `${params.order === "asc" ? "-" : ""}${params.sortBy}`
         ) {
@@ -82,7 +84,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (isMounted.current) {
-      const sortInfo = sortList[activeSort].type;
+      const sortInfo = sortListType[activeSort].type;
       const queryString = qs.stringify({
         sortBy: sortInfo.replace("-", ""),
         order: sortInfo.includes("-") ? "asc" : "desc",
@@ -105,9 +107,12 @@ const Home: FC = () => {
   }, [activeCategory, activeSort, searchValue, activePage]);
 
   const pizzasItems = pizzas
-    .filter((item) =>
-      item.title.toLowerCase().includes(searchValue.toLowerCase())
-    )
+    .filter((item) => {
+      if (i18n.resolvedLanguage === "ua")
+        return item.title.toLowerCase().includes(searchValue.toLowerCase());
+      else
+        return item.title_en.toLowerCase().includes(searchValue.toLowerCase());
+    })
     .map((item) => <PizzaBlock key={item.id} {...item} />);
 
   const fakeCards = new Array(8)
@@ -126,7 +131,7 @@ const Home: FC = () => {
       </div>
       {isLoading !== "error" ? (
         <>
-          <h2 className="content__title">Всі піци</h2>
+          <h2 className="content__title">{t("pizza.pageTitle")}</h2>
           <div className="content__items">
             {isLoading === "loading"
               ? fakeCards

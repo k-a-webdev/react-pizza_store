@@ -8,6 +8,7 @@ import { setSearchValue } from "../../redux/filter/slice";
 
 // Styles
 import styles from "./Search.module.scss";
+import { useTranslation } from "react-i18next";
 
 // Main block
 export const Search: FC = () => {
@@ -15,6 +16,7 @@ export const Search: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   // Search processing
   const setGlobalSearch = useCallback(
@@ -70,7 +72,7 @@ export const Search: FC = () => {
 
       <input
         className={""}
-        placeholder="Search pizza...."
+        placeholder={t("header.searchPlaceholder")}
         onChange={onChangeSearch}
         value={inputValue}
         ref={inputRef}

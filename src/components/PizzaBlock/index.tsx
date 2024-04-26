@@ -3,14 +3,16 @@ import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Redux Toolkit imports
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ICartItem } from "../../redux/cart/types";
 import { addProduct } from "../../redux/cart/slice";
-import { RootState } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
+import { useTranslation } from "react-i18next";
 
 // Types
 type PizzaBlockProps = {
   title: string;
+  title_en: string;
   price: number;
   imageUrl: string;
   types: number[];
@@ -21,6 +23,7 @@ type PizzaBlockProps = {
 // Main block
 export const PizzaBlock: FC<PizzaBlockProps> = ({
   title,
+  title_en,
   price,
   imageUrl,
   types,
@@ -30,16 +33,15 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
 
-  const typeNames = ["тонка", "традиційна"];
+  const { t, i18n } = useTranslation();
+  const typeNames = t("pizza.typeNames", { returnObjects: true }) as string[];
 
   // Redux logic
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { priceUSD } = useSelector((state: RootState) => state.cartReducer);
   const cartPizza = useSelector((state: RootState) =>
     state.cartReducer.products.find(
-      (el) =>
-        el.id === id &&
-        el.size === activeSize &&
-        el.type === typeNames[activeType]
+      (el) => el.id === id && el.size === activeSize && el.type === activeType
     )
   );
 
@@ -47,9 +49,10 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
     const pizza: ICartItem = {
       id,
       title,
+      title_en,
       price,
       imageUrl,
-      type: typeNames[activeType],
+      type: activeType,
       size: activeSize,
       count: 0,
     };
@@ -61,7 +64,9 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
     <div className="pizza-block">
       <Link to={`pizza/${id}`}>
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{title}</h4>
+        <h4 className="pizza-block__title">
+          {i18n.resolvedLanguage === "en" ? title_en : title}
+        </h4>
       </Link>
 
       <div className="pizza-block__selector">
@@ -86,14 +91,18 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
                 className={activeSize === size ? "active" : ""}
                 key={size}
               >
-                {size} см.
+                {size} {t("pizza.size")}
               </li>
             );
           })}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">від {price} ₴</div>
+        <div className="pizza-block__price">
+          {i18n.resolvedLanguage === "en"
+            ? `from ${Math.ceil(price / priceUSD)} $`
+            : `від ${price} ₴`}
+        </div>
         <button
           className="button button--outline button--add"
           onClick={onClickAdd}
@@ -110,7 +119,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ({
               fill="white"
             />
           </svg>
-          <span>Додати</span>
+          <span>{t("button.pizzaAdd")}</span>
           {cartPizza && <i>{cartPizza.count}</i>}
         </button>
       </div>

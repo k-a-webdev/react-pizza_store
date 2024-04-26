@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICartItem, ICartState } from "./types";
 
 import { getCartFromLS } from "../../utils/getCartFromLS";
+import { fetchUSD } from "./asyncActions";
 
 const cartData = getCartFromLS();
 
@@ -10,6 +11,7 @@ const initialState: ICartState = {
   products: cartData.products,
   totalPrice: cartData.totalPrice,
   totalCount: cartData.totalCount,
+  priceUSD: 0,
 };
 
 const cartSlice = createSlice({
@@ -76,6 +78,17 @@ const cartSlice = createSlice({
       state.totalPrice = 0;
       state.totalCount = 0;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUSD.pending, (state) => {
+      //
+    });
+    builder.addCase(fetchUSD.fulfilled, (state, { payload }) => {
+      if (payload.length > 0) state.priceUSD = payload[0]["rate"];
+    });
+    builder.addCase(fetchUSD.rejected, (state) => {
+      //
+    });
   },
 });
 

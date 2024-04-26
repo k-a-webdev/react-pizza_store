@@ -3,16 +3,19 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 // Redux Toolkit imports
-import { useAppDispatch } from "../redux/store";
+import { RootState, useAppDispatch } from "../redux/store";
 import { addProduct, clearProducts, removeProduct } from "../redux/cart/slice";
 import { ICartItem } from "../redux/cart/types";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 // Types
 type CartItemsProps = {
   id: number;
   imageUrl: string;
   title: string;
-  type: string;
+  title_en: string;
+  type: number;
   size: number;
   price: number;
   count: number;
@@ -23,12 +26,18 @@ export const CartItem: FC<CartItemsProps> = ({
   id,
   imageUrl,
   title,
+  title_en,
   type,
   size,
   price,
   count,
 }) => {
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+
+  const { priceUSD } = useSelector((state: RootState) => state.cartReducer);
+
+  const typeNames = t("pizza.typeNames", { returnObjects: true }) as string[];
 
   return (
     <div className="cart__item">
@@ -37,9 +46,9 @@ export const CartItem: FC<CartItemsProps> = ({
       </div>
 
       <Link to={`/pizza/${id}`} className="cart__item-info">
-        <h3>{title}</h3>
+        <h3>{i18n.resolvedLanguage === "en" ? title_en : title}</h3>
         <p>
-          {type}, {size} см.
+          {typeNames[type]}, {size} {t("pizza.size")}
         </p>
       </Link>
 
@@ -89,6 +98,7 @@ export const CartItem: FC<CartItemsProps> = ({
                 price,
                 count,
                 title,
+                title_en,
                 imageUrl,
               })
             )
@@ -114,18 +124,18 @@ export const CartItem: FC<CartItemsProps> = ({
       </div>
 
       <div className="cart__item-price">
-        <b>{price * count} ₴</b>
+        <b>
+          {i18n.resolvedLanguage === "en"
+            ? `${Math.ceil((price * count) / priceUSD)} $`
+            : `${price * count} ₴`}
+        </b>
       </div>
 
       <div className="cart__item-remove">
         <button
           className="button button--outline button--circle"
           onClick={() => {
-            if (
-              window.confirm(
-                "Do you really want to remove this item from the cart?"
-              )
-            ) {
+            if (window.confirm(t("cart.clearItemConfirm"))) {
               dispatch(
                 clearProducts({
                   id,

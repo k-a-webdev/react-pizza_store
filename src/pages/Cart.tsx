@@ -1,6 +1,5 @@
 // Main imports
 import { FC } from "react";
-import { Link } from "react-router-dom";
 
 // Redux Toolkit
 import { useSelector } from "react-redux";
@@ -9,13 +8,16 @@ import { clearCart } from "../redux/cart/slice";
 import { selectCart } from "../redux/cart/selectors";
 
 // My components
-import { CartItem, CartEmpty } from "../components";
+import { CartItem, CartEmpty, ButtonHome } from "../components";
+import { useTranslation } from "react-i18next";
 
 // Main block
 const Cart: FC = () => {
-  const { products, totalPrice, totalCount } = useSelector(selectCart);
+  const { products, totalPrice, totalCount, priceUSD } =
+    useSelector(selectCart);
 
   const dispatcher = useAppDispatch();
+  const { t, i18n } = useTranslation();
 
   if (!products.length) {
     return <CartEmpty />;
@@ -55,16 +57,12 @@ const Cart: FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            Кошик
+            {t("cart.pageTitle")}
           </h2>
           <div
             className="cart__clear"
             onClick={() => {
-              if (
-                window.confirm(
-                  "Are you sure you want to remove items from the cart?"
-                )
-              )
+              if (window.confirm(t("cart.clearCartConfirm")))
                 dispatcher(clearCart());
             }}
           >
@@ -105,7 +103,7 @@ const Cart: FC = () => {
               />
             </svg>
 
-            <span>Очистити кошик</span>
+            <span>{t("button.cartClear")}</span>
           </div>
         </div>
         <div className="content__items">
@@ -116,39 +114,25 @@ const Cart: FC = () => {
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              {" "}
-              Всього піц: <b>{totalCount} шт.</b>{" "}
+              {t("cart.countLabel")}{" "}
+              <b>
+                {totalCount} {t("cart.countSubLabel")}
+              </b>
             </span>
             <span>
               {" "}
-              Сума замовлення: <b>{totalPrice} ₴</b>{" "}
+              {t("cart.priceLabel")}
+              <b>
+                {i18n.resolvedLanguage === "en"
+                  ? `${Math.ceil(totalPrice / priceUSD)} $`
+                  : `${totalPrice} ₴`}
+              </b>{" "}
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link
-              to="/"
-              className="button button--outline button--add go-back-btn"
-            >
-              <svg
-                width="8"
-                height="14"
-                viewBox="0 0 8 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 13L1 6.93015L6.86175 1"
-                  stroke="#D3D3D3"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span>Повернутись на головну</span>
-            </Link>
+            <ButtonHome />
             <div className="button pay-btn">
-              <span>Оплатити зараз</span>
+              <span>{t("button.payNow")}</span>
             </div>
           </div>
         </div>

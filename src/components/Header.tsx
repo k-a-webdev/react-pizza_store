@@ -7,18 +7,21 @@ import { useSelector } from "react-redux";
 import { selectCart } from "../redux/cart/selectors";
 
 // My components
-import { Search } from "../components";
+import { ButtonLang, Search } from "../components";
 
 // Asset imports
 import logoSvg from "../assets/img/pizza-logo.svg";
+import { useTranslation } from "react-i18next";
 
 // Main block
 export const Header: FC = () => {
   const isMounted = useRef(false);
 
-  const { products, totalPrice, totalCount } = useSelector(selectCart);
+  const { products, totalPrice, totalCount, priceUSD } =
+    useSelector(selectCart);
 
   const location = useLocation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (isMounted.current) {
@@ -37,7 +40,7 @@ export const Header: FC = () => {
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
               <h1>Pizza store</h1>
-              <p>The most delicious pizza in the Universal</p>
+              <p>{t("header.subTitle")}</p>
             </div>
           </div>
         </Link>
@@ -46,7 +49,11 @@ export const Header: FC = () => {
 
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>{totalPrice} ₴</span>
+            <span>
+              {i18n.resolvedLanguage === "en"
+                ? `${Math.ceil(totalPrice / priceUSD)} $`
+                : `${totalPrice} ₴`}
+            </span>
             <div className="button__delimiter"></div>
 
             <svg
@@ -82,6 +89,8 @@ export const Header: FC = () => {
             <span>{totalCount}</span>
           </Link>
         </div>
+
+        <ButtonLang />
       </div>
     </div>
   );

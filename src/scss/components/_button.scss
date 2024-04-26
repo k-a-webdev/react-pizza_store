@@ -163,4 +163,12 @@
       font-size: 1.7rem;
     }
   }
+
+  &__lang {
+    min-width: max-content;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 }

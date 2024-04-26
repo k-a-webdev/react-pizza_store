@@ -1,7 +1,10 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export const ButtonHome: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Link to="/" className="button button--outline button__go-home ">
       <svg
@@ -20,7 +23,7 @@ export const ButtonHome: FC = () => {
         />
       </svg>
 
-      <span>Go to home page</span>
+      <span>{t("button.backHome")}</span>
     </Link>
   );
 };

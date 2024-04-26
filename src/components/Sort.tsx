@@ -4,19 +4,20 @@ import React from "react";
 // Redux Toolkit imports
 import { useAppDispatch } from "../redux/store";
 import { setActiveSort } from "../redux/filter/slice";
+import { useTranslation } from "react-i18next";
 
 // Types
 type PopupClick = MouseEvent & {
   composedPath: () => Node[];
 };
 
-export const sortList = [
-  { name: "популярністю (DESC)", type: "rating" },
-  { name: "популярністю (ASC)", type: "-rating" },
-  { name: "ціною (за спаданням)", type: "price" },
-  { name: "ціною (за зростанням)", type: "-price" },
-  { name: "алфавітом (DESC)", type: "title" },
-  { name: "алфавітом (ASC)", type: "-title" },
+export const sortListType = [
+  { type: "rating" },
+  { type: "-rating" },
+  { type: "price" },
+  { type: "-price" },
+  { type: "title" },
+  { type: "-title" },
 ];
 
 // Main block
@@ -27,10 +28,16 @@ export const Sort: React.FC<{ activeSort: number }> = React.memo(
 
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const onChangeSort = (i: number) => {
       dispatch(setActiveSort(i));
       setIsOpen(false);
     };
+
+    const sortListName = t("sort.sortListName", {
+      returnObjects: true,
+    }) as string[];
 
     React.useEffect(() => {
       const onClickOutside = (e: MouseEvent) => {
@@ -63,7 +70,7 @@ export const Sort: React.FC<{ activeSort: number }> = React.memo(
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={{
-              transform: activeSort % 2 != 0 ? "rotate(180deg)" : "",
+              transform: activeSort % 2 == 0 ? "rotate(180deg)" : "",
             }}
           >
             <path
@@ -71,8 +78,8 @@ export const Sort: React.FC<{ activeSort: number }> = React.memo(
               fill="#2C2C2C"
             />
           </svg>
-          <b>Сортувати за:</b>
-          <span>{sortList[activeSort].name}</span>
+          <b>{t("sort.label")}</b>
+          <span>{sortListName[activeSort]}</span>
         </div>
         {isOpen && (
           <div
@@ -80,14 +87,14 @@ export const Sort: React.FC<{ activeSort: number }> = React.memo(
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <ul>
-              {sortList.map((el, i) => {
+              {sortListName.map((el, i) => {
                 return (
                   <li
                     className={activeSort === i ? "active" : ""}
                     onClick={() => onChangeSort(i)}
-                    key={el.type}
+                    key={sortListType[i].type}
                   >
-                    {el.name}
+                    {el}
                   </li>
                 );
               })}

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { fetchPizzas } from "./asyncActions";
 import { IPizzaState, Status } from "./types";
@@ -6,12 +6,17 @@ import { IPizzaState, Status } from "./types";
 const initialState: IPizzaState = {
   items: [],
   isLoading: Status.LOADING, // loading || success || error
+  lang: "ua",
 };
 
 const pizzasSlice = createSlice({
   name: "pizzas",
   initialState,
-  reducers: {},
+  reducers: {
+    setLang(state, action: PayloadAction<string>) {
+      state.lang = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
       state.items = [];
@@ -29,3 +34,4 @@ const pizzasSlice = createSlice({
 });
 
 export default pizzasSlice.reducer;
+export const { setLang } = pizzasSlice.actions;

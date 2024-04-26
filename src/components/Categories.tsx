@@ -5,27 +5,26 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { setActiveCategory } from "../redux/filter/slice";
+import { useTranslation } from "react-i18next";
+import { TOptions } from "i18next";
 
 // Main block
 export const Categories: React.FC = React.memo(() => {
-  const categorieList = [
-    "Всі",
-    "М'ясні",
-    "Вегетаріанські",
-    "Гриль",
-    "Гострі",
-    "Закриті",
-  ];
-
   // Redux logic
   const dispatch = useAppDispatch();
   const activeCategory = useSelector(
     (state: RootState) => state.filterReducer.activeCategory
   );
 
+  const { t } = useTranslation();
+
   const onChangeCategory = (index: number) => {
     dispatch(setActiveCategory(index));
   };
+
+  const categorieList = t("categories.categorieList", {
+    returnObjects: true,
+  }) as string[];
 
   return (
     <div className="categories">

@@ -10,3 +10,4 @@ export * from "./GetPizzasError";
 export * from "./Header";
 export * from "./Sort";
 export * from "./ButtonHome";
+export * from "./ButtonLang";
