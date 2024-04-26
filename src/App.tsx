@@ -13,6 +13,7 @@ import { useAppDispatch } from "./redux/store";
 
 // Redux imports
 import { fetchUSD } from "./redux/cart/asyncActions";
+import Preloader from "./pages/Preloader";
 
 // Lazy loading
 const Cart = lazy(() => import(/* webpackChunkName: "Cart" */ "./pages/Cart"));
@@ -39,7 +40,7 @@ export default function App() {
         <Route
           path="/cart"
           element={
-            <Suspense fallback={t("loadPageText")}>
+            <Suspense fallback={<Preloader />}>
               <Cart />
             </Suspense>
           }
@@ -47,7 +48,7 @@ export default function App() {
         <Route
           path="/pizza/:id"
           element={
-            <Suspense fallback={t("loadPageText")}>
+            <Suspense fallback={<Preloader />}>
               <FullPizza />
             </Suspense>
           }
@@ -55,7 +56,7 @@ export default function App() {
         <Route
           path="*"
           element={
-            <Suspense fallback={t("loadPageText")}>
+            <Suspense fallback={<Preloader />}>
               <NotFound />
             </Suspense>
           }
@@ -66,7 +67,5 @@ export default function App() {
 }
 
 // TODO:
-// - change language to English
-// - change fonts to em/rem
+// - add dark/light themes
 // - add more responsive styles
-// - add loading page
