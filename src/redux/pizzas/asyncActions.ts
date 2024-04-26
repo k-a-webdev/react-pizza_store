@@ -10,3 +10,11 @@ export const fetchPizzas = createAsyncThunk<PizzaItem[], string>(
     return data;
   }
 );
+
+export const fetchAllPizzas = createAsyncThunk<PizzaItem[], string>(
+  "pizzas/fetchAllPizzas",
+  async (mainURL) => {
+    const { data } = await axios.get<PizzaItem[]>(mainURL);
+    return data;
+  }
+);

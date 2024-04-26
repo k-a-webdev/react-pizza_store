@@ -19,5 +19,6 @@ export enum Status {
 export interface IPizzaState {
   items: PizzaItem[];
   isLoading: Status;
-  lang: string;
+  itemsCount: number;
+  pagesCount: number;
 }

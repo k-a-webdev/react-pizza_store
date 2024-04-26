@@ -10,7 +10,6 @@ import MainLayout from "./layouts/MainLayout";
 // Styles
 import "./scss/app.scss";
 import { useAppDispatch } from "./redux/store";
-import { setLang } from "./redux/pizzas/slice";
 
 // Redux imports
 import { fetchUSD } from "./redux/cart/asyncActions";
@@ -30,8 +29,6 @@ export default function App() {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    i18n.resolvedLanguage && dispatch(setLang(i18n.resolvedLanguage));
-
     dispatch(fetchUSD());
   }, []);
 

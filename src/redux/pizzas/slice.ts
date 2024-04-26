@@ -1,23 +1,21 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchPizzas } from "./asyncActions";
+import { fetchPizzas, fetchAllPizzas } from "./asyncActions";
 import { IPizzaState, Status } from "./types";
 
 const initialState: IPizzaState = {
   items: [],
   isLoading: Status.LOADING, // loading || success || error
-  lang: "ua",
+  itemsCount: 0,
+  pagesCount: 1,
 };
 
 const pizzasSlice = createSlice({
   name: "pizzas",
   initialState,
-  reducers: {
-    setLang(state, action: PayloadAction<string>) {
-      state.lang = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    // fetchPizzass
     builder.addCase(fetchPizzas.pending, (state) => {
       state.items = [];
       state.isLoading = Status.LOADING;
@@ -30,8 +28,21 @@ const pizzasSlice = createSlice({
       state.items = [];
       state.isLoading = Status.ERROR;
     });
+
+    // fetchAllPizzas
+    builder.addCase(fetchAllPizzas.pending, (state) => {
+      state.itemsCount = 0;
+    });
+    builder.addCase(fetchAllPizzas.fulfilled, (state, { payload }) => {
+      state.itemsCount = payload.length;
+
+      if (payload.length > 8) state.pagesCount = 2;
+      else state.pagesCount = 1;
+    });
+    builder.addCase(fetchAllPizzas.rejected, (state) => {
+      state.itemsCount = 0;
+    });
   },
 });
 
 export default pizzasSlice.reducer;
-export const { setLang } = pizzasSlice.actions;

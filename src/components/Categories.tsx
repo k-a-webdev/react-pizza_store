@@ -1,12 +1,11 @@
 // Main imports
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
-import { setActiveCategory } from "../redux/filter/slice";
-import { useTranslation } from "react-i18next";
-import { TOptions } from "i18next";
+import { setActiveCategory, setActivePage } from "../redux/filter/slice";
 
 // Main block
 export const Categories: React.FC = React.memo(() => {
@@ -19,6 +18,7 @@ export const Categories: React.FC = React.memo(() => {
   const { t } = useTranslation();
 
   const onChangeCategory = (index: number) => {
+    dispatch(setActivePage(1));
     dispatch(setActiveCategory(index));
   };
 

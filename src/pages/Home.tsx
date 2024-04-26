@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store";
 import { selectFilter } from "../redux/filter/selectors";
 import { setActivePage, setFilters } from "../redux/filter/slice";
-import { fetchPizzas } from "../redux/pizzas/asyncActions";
+import { fetchAllPizzas, fetchPizzas } from "../redux/pizzas/asyncActions";
 import { useTranslation } from "react-i18next";
 
 // My components
@@ -52,9 +52,13 @@ const Home: FC = () => {
     const filterOrder = sortInfo.includes("-") ? "asc" : "desc";
     const filterCategory = activeCategory ? `&category=${activeCategory}` : "";
 
-    const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?page=${activePage}&limit=4${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
+    const mainURL = `https://64e6234909e64530d17fa566.mockapi.io/items?page=${activePage}&limit=8${filterCategory}&sortBy=${filterBy}&order=${filterOrder}`;
 
     dispatch(fetchPizzas(mainURL));
+
+    const basicURL = `https://64e6234909e64530d17fa566.mockapi.io/items?${filterCategory}`;
+
+    dispatch(fetchAllPizzas(basicURL));
   };
 
   // At the first rendering, we check the url parameters and, if available, record them in the editor
