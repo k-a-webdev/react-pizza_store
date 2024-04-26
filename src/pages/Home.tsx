@@ -58,7 +58,7 @@ const Home: FC = () => {
 
     const basicURL = `https://64e6234909e64530d17fa566.mockapi.io/items?${filterCategory}`;
 
-    !searchValue && dispatch(fetchAllPizzas(basicURL));
+    !searchValue && dispatch(fetchAllPizzas(basicURL)); // For dinamyc pagination must know how many pizzas
   };
 
   // At the first rendering, we check the url parameters and, if available, record them in the editor
@@ -82,6 +82,8 @@ const Home: FC = () => {
           activePage: Number(params.page),
         })
       );
+
+      getPizzas();
       isSearch.current = true;
     }
   }, []);
