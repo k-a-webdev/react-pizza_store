@@ -36,7 +36,9 @@
     "countSubLabel": "pcs.",
     "priceLabel": "The order amount: ",
     "clearCartConfirm": "Are you sure you want to remove items from the cart?",
-    "clearItemConfirm": "Do you really want to remove this item from the cart?"
+    "clearItemConfirm": "Do you really want to remove this item from the cart?",
+    "emptyLabel": "Your cart is empty",
+    "emptySubLabel": "To order, go to the home page"
   },
   "notFound": {
     "title": "Not found any page on this url",
