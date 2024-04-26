@@ -1,7 +1,6 @@
 // Main imports
 import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 // Pages
 import Home from "./pages/Home";
@@ -27,7 +26,6 @@ const FullPizza = lazy(
 // Main block
 export default function App() {
   const dispatch = useAppDispatch();
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchUSD());
@@ -65,7 +63,3 @@ export default function App() {
     </Routes>
   );
 }
-
-// TODO:
-// - add dark/light themes
-// - add more responsive styles

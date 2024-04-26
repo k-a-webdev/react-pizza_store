@@ -70,7 +70,7 @@ export const Sort: React.FC<{ activeSort: number }> = React.memo(
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             style={{
-              transform: activeSort % 2 == 0 ? "rotate(180deg)" : "",
+              transform: activeSort % 2 === 0 ? "rotate(180deg)" : "",
             }}
           >
             <path
