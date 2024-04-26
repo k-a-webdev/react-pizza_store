@@ -1,25 +1,26 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+import { ButtonHome } from "./index";
 
 import cartEmptyImg from "../assets/img/empty-cart.png";
 
 export const CartEmpty: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="cart cart--empty">
       <h2>
-        Ваш кошик пустий <span>😕</span>
+        {t("cart.emptyLabel")} <span>😕</span>
       </h2>
 
       <p>
-        Скоріше за все, ви ще не замовили що хотіли.
+        {t("cart.emptySubLabel")}
         <br />
-        Для замовлення перейдіть на головну сторінку.
       </p>
       <img src={cartEmptyImg} alt="Empty cart" />
 
-      <Link to="/" className="button button--black">
-        <span>Повернутись на головну</span>
-      </Link>
+      <ButtonHome />
     </div>
   );
 };

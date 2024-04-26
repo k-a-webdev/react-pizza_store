@@ -123,6 +123,7 @@ body {
 
   &__item {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     border-top: 1px solid $gray-line;
     padding-top: 30px;
@@ -310,6 +311,9 @@ body {
     margin: 60px auto;
     width: 620px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h2 {
       font-size: 36px;

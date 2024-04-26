@@ -48,7 +48,7 @@ export const Header: FC = () => {
         {location.pathname === "/" && <Search />}
 
         <div className="header__cart">
-          <Link to="/cart" className="button button--cart">
+          <Link to="cart" className="button button--cart">
             <span>
               {i18n.resolvedLanguage === "en-US"
                 ? `${totalPrice_en} $`

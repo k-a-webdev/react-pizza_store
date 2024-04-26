@@ -45,7 +45,7 @@ export const CartItem: FC<CartItemsProps> = ({
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
 
-      <Link to={`/pizza/${id}`} className="cart__item-info">
+      <Link to={`pizza/${id}`} className="cart__item-info">
         <h3>{i18n.resolvedLanguage === "en-US" ? title_en : title}</h3>
         <p>
           {typeNames[type]}, {size} {t("pizza.size")}

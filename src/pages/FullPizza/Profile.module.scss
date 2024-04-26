@@ -1,17 +1,25 @@
-.profile {
+.root {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
+  align-items: center;
 
-  &__img {
-  }
+  .profile {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 
-  &__info {
-    width: 100%;
-    margin-right: 20px;
+    &__img > img {
+      width: 350px;
+    }
 
-    .details {
-      margin: 20px 0;
+    &__info {
+      width: 100%;
+      margin-right: 20px;
+
+      .details {
+        margin: 20px 0;
+      }
     }
   }
 }
