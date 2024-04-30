@@ -35,7 +35,7 @@ export const Header: FC = () => {
   return (
     <div className="header">
       <div className="container">
-        <Link to="">
+        <Link to={process.env.REACT_APP_DOMAIN ? process.env.REACT_APP_DOMAIN : "/"}>
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>

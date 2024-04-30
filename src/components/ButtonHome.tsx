@@ -6,7 +6,10 @@ export const ButtonHome: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Link to="/" className="button button--outline button__go-home ">
+    <Link
+      to={process.env.REACT_APP_DOMAIN ? process.env.REACT_APP_DOMAIN : "/"}
+      className="button button--outline button__go-home "
+    >
       <svg
         width="8"
         height="14"

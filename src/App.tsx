@@ -33,7 +33,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<MainLayout />}>
+      <Route path={process.env.REACT_APP_DOMAIN} element={<MainLayout />}>
         <Route path="" element={<Home />} />
         <Route
           path="cart"
