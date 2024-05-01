@@ -8,7 +8,7 @@ export const ButtonHome: FC = () => {
   return (
     <Link
       to={process.env.REACT_APP_DOMAIN ? process.env.REACT_APP_DOMAIN : "/"}
-      className="button button--outline button__go-home "
+      className="btn-primary flex p-4 gap-5 w-max relative bg-white border border-myOrange text-myOrange hover:bg-myOrange hover:text-white"
     >
       <svg
         width="8"
@@ -16,6 +16,7 @@ export const ButtonHome: FC = () => {
         viewBox="0 0 8 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="fill-current"
       >
         <path
           d="M7 13L1 6.93015L6.86175 1"
@@ -26,7 +27,7 @@ export const ButtonHome: FC = () => {
         />
       </svg>
 
-      <span>{t("button.backHome")}</span>
+      <span className="text-xl md:text-2xl">{t("button.backHome")}</span>
     </Link>
   );
 };

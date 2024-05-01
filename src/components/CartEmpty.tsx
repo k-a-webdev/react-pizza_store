@@ -9,18 +9,20 @@ export const CartEmpty: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="cart cart--empty">
-      <h2>
-        {t("cart.emptyLabel")} <span>😕</span>
-      </h2>
-
-      <p>
-        {t("cart.emptySubLabel")}
-        <br />
-      </p>
-      <img src={cartEmptyImg} alt="Empty cart" />
-
-      <ButtonHome />
+    <div className="py-3 px-4 md:py-10 md:px-16">
+      <div className="mx-auto max-w-205 text-center flex flex-col items-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl">
+          {t("cart.emptyLabel")} <span>😕</span>
+        </h2>
+  
+        <p className="text-xl sm:text-2xl md:text-3xl mb-4">
+          {t("cart.emptySubLabel")}
+          <br />
+        </p>
+        <img src={cartEmptyImg} alt="Empty cart" />
+  
+        <ButtonHome />
+      </div>
     </div>
   );
 };

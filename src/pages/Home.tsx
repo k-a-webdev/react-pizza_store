@@ -129,16 +129,16 @@ const Home: FC = () => {
     });
 
   return (
-    <div className="container">
-      <div className="content__top">
+    <div className="w-full">
+      <div className="flex justify-between items-center gap-4 flex-col xl:flex-row">
         <Categories />
 
         <Sort {...{ activeSort }} />
       </div>
       {isLoading !== "error" ? (
         <>
-          <h2 className="content__title">{t("pizza.pageTitle")}</h2>
-          <div className="content__items">
+          <h2 className="m-8 font-extrabold text-4xl">{t("pizza.pageTitle")}</h2>
+          <div className="grid grid-cols-myTempl gap-y-16 gap-x-8 justify-between">
             {isLoading === "loading"
               ? fakeCards
               : isLoading === "success"

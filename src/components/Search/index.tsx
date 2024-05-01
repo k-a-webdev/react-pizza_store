@@ -2,15 +2,14 @@
 import { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
+import { twMerge } from "tailwind-merge";
+import { clsx } from 'clsx';
 
 // Redux Toolkit imports
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { setSearchValue } from "../../redux/filter/slice";
 import { setPagesCount } from "../../redux/pizzas/slice";
-
-// Styles
-import styles from "./Search.module.scss";
 
 // Main block
 export const Search: FC = () => {
@@ -48,13 +47,13 @@ export const Search: FC = () => {
   };
 
   return (
-    <div className={styles.root}>
+    <div className="w-72 m-auto flex items-center gap-2.5 xl:justify-self-end relative border border-opacity-10 rounded-xl py-3 px-5 box-border">
       <svg
         height="512"
         viewBox="0 0 512 512"
         width="512"
         xmlns="http://www.w3.org/2000/svg"
-        className={styles.icon}
+        className="max-w-6 max-h-6 opacity-30"
       >
         <title />
         <path
@@ -82,52 +81,50 @@ export const Search: FC = () => {
       </svg>
 
       <input
-        className={""}
+        className="w-full text-base outline-0 border-b border-gray-200 focus:border-gray-700 transition duration-300 ease-in-out"
         placeholder={t("header.searchPlaceholder")}
         onChange={onChangeSearch}
         value={inputValue}
         ref={inputRef}
       />
 
-      {inputValue && (
-        <svg
-          viewBox="0 0 32 32"
-          xmlns="http://www.w3.org/2000/svg"
-          className={styles.clearIcon}
-          onClick={onClearSearch}
-        >
-          <defs></defs>
-          <title />
-          <g id="cross">
-            <line
-              style={{
-                fill: "none",
-                stroke: "#000",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: "2px",
-              }}
-              x1="7"
-              x2="25"
-              y1="7"
-              y2="25"
-            />
-            <line
-              style={{
-                fill: "none",
-                stroke: "#000",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: "2px",
-              }}
-              x1="7"
-              x2="25"
-              y1="25"
-              y2="7"
-            />
-          </g>
-        </svg>
-      )}
+      <svg
+        viewBox="0 0 32 32"
+        xmlns="http://www.w3.org/2000/svg"
+        className={twMerge(clsx("w-6 h-6 opacity-30 cursor-pointer hover:opacity-80", inputValue ? "block" : "hidden"))}
+        onClick={onClearSearch}
+      >
+        <defs></defs>
+        <title />
+        <g id="cross">
+          <line
+            style={{
+              fill: "none",
+              stroke: "#000",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              strokeWidth: "2px",
+            }}
+            x1="7"
+            x2="25"
+            y1="7"
+            y2="25"
+          />
+          <line
+            style={{
+              fill: "none",
+              stroke: "#000",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              strokeWidth: "2px",
+            }}
+            x1="7"
+            x2="25"
+            y1="25"
+            y2="7"
+          />
+        </g>
+      </svg>
     </div>
   );
 };

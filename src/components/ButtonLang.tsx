@@ -11,10 +11,10 @@ export const ButtonLang: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-row gap-2.5">
       {langs.map((el, i) => (
         <button
-          className="button button--outline button__lang"
+          className="btn-primary bg-white border border-myOrange text-myOrange hover:bg-myOrange hover:text-white"
           onClick={() => el !== i18n.resolvedLanguage && changeLangs(el)}
           key={el}
         >

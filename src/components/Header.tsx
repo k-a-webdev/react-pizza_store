@@ -33,28 +33,30 @@ export const Header: FC = () => {
   }, [products]);
 
   return (
-    <div className="header">
-      <div className="container">
-        <Link to={process.env.REACT_APP_DOMAIN ? process.env.REACT_APP_DOMAIN : "/"}>
-          <div className="header__logo">
-            <img width="38" src={logoSvg} alt="Pizza logo" />
-            <div>
-              <h1>Pizza store</h1>
-              <p>{t("header.subTitle")}</p>
+    <header className="py-3 px-4 md:py-10 md:px-16 border-b border-myGray-1">
+      <div className="flex flex-col xl:flex-row items-center gap-2.5 w-full xl:justify-between">
+        <div className="flex flex-col gap-2.5 items-center md:flex-row md:gap-10 xl:w-full">
+          <Link to={process.env.REACT_APP_DOMAIN ? process.env.REACT_APP_DOMAIN : "/"}>
+            <div className="flex">
+              <img width="38" src={logoSvg} alt="Pizza logo" className="mr-3.5" />
+              <div>
+                <h1 className="text-text-black text-2xl uppercase font-extrabold">Pizza store</h1>
+                <p className="text-text-gray">{t("header.subTitle")}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+  
+          {location.pathname === process.env.REACT_APP_DOMAIN && <Search />}
+        </div>
 
-        {location.pathname === "/" && <Search />}
-
-        <div className="header__cart">
-          <Link to="cart" className="button button--cart">
+        <div className="flex flex-col sm:flex-row gap-2.5 items-center xl:justify-items-end">
+          <Link to="cart" className="btn-primary bg-myOrange border divide-transparent hover:brightness-[93%] active:brightness-[90%] active:translate-y-0.5">
             <span>
               {i18n.resolvedLanguage === "en-US"
                 ? `${totalPrice_en} $`
                 : `${totalPrice} ₴`}
             </span>
-            <div className="button__delimiter"></div>
+            <div className="w-0.5 h-6 mx-3.5 bg-background-gray"></div>
 
             <svg
               width="18"
@@ -86,12 +88,12 @@ export const Header: FC = () => {
               />
             </svg>
 
-            <span>{totalCount}</span>
+            <span className="ml-1.5">{totalCount}</span>
           </Link>
+        
+          <ButtonLang />
         </div>
-
-        <ButtonLang />
       </div>
-    </div>
+    </header>
   );
 };
